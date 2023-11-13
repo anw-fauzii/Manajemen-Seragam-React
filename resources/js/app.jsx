@@ -1,11 +1,14 @@
 import './bootstrap';
 import '../css/app.css';
-
+import 'flowbite';
+import 'toastr/build/toastr.min.css';
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import 'flowbite';
-
+import { InertiaProgress } from '@inertiajs/progress';
+import 'primereact/resources/themes/lara-light-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
@@ -20,3 +23,4 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+InertiaProgress.init();

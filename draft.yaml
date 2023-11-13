@@ -1,0 +1,18 @@
+models:
+  Seragam:
+    nama_seragam: string
+    kategori: enum:1,2,3
+    foto: text
+    harga: integer
+    relationships:
+      hasMany: SeragamDetail
+  SeragamDetail:
+    seragam_id: id foreign:seragam.id
+    ukuran: integer
+    stok: integer
+    relationships:
+      belongsTo: Seragam
+controllers:
+  Seragam:
+    index:
+      query: all

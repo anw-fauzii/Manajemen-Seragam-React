@@ -1,0 +1,15 @@
+created:
+    - app/Http/Controllers/seragamController.php
+    - database/factories/SeragamFactory.php
+    - database/factories/SeragamDetailFactory.php
+    - database/migrations/2023_10_30_020208_create_seragams_table.php
+    - database/migrations/2023_10_30_020209_create_seragam_details_table.php
+    - app/Models/Seragam.php
+    - app/Models/SeragamDetail.php
+    - tests/Feature/Http/Controllers/seragamControllerTest.php
+updated:
+    - routes/web.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    Seragam: { nama_seragam: string, kategori: 'enum:1,2,3', foto: text, harga: integer, relationships: { hasMany: SeragamDetail } }
+    SeragamDetail: { seragam_id: 'id foreign:seragam.id', ukuran: integer, stok: integer, relationships: { belongsTo: Seragam } }
