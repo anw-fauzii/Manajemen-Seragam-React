@@ -11,7 +11,7 @@ class SeragamController extends Controller
 {
     public function index(Request $request)
     {
-        $seragam = Seragam::paginate($request->perpage ?? 10);
+        $seragam = Seragam::paginate(100);
         return Inertia::render('Seragam/Index', [
             'title' => "Daftar Seragam",
             'seragam' => $seragam,
