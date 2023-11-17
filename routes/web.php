@@ -36,5 +36,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::resource('seragam', App\Http\Controllers\SeragamController::class)->except('update')->middleware(['auth', 'verified']);
+Route::resource('seragam', App\Http\Controllers\SeragamController::class)->except('update')->middleware(['auth']);
 Route::post('edit-seragam/{id}', [App\Http\Controllers\SeragamController::class, 'update']);
+Route::resource('seragam-detail', App\Http\Controllers\SeragamDetailController::class)->except('update')->middleware(['auth']);
+Route::post('edit-seragam-detail/{id}', [App\Http\Controllers\SeragamDetailController::class, 'update']);

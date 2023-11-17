@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SeragamDetail extends Model
 {
     use HasFactory;
-    protected $table = "detail_seragam";
+    protected $table = "seragam_detail";
     protected $fillable = [
         'seragam_id',
         'ukuran',

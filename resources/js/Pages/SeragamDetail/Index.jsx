@@ -9,6 +9,7 @@ import { NumericFormat } from 'react-number-format';
 import Modal from '@/Components/Modal';
 
 export default function Index(props) {
+    console.log(props.seragam.data)
     const [filterText, setFilterText] = useState('');
     const [perPage, setPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,15 +17,14 @@ export default function Index(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const filteredItems = props.seragam.data.filter(
         item =>
-            (item.nama_seragam && item.nama_seragam.toLowerCase().includes(filterText.toLowerCase())) ||
-            ((typeof item.harga === 'string' && item.harga.toLowerCase().includes(filterText.toLowerCase())) ||
-                (typeof item.harga === 'number' && item.harga.toString().toLowerCase().includes(filterText.toLowerCase())))
+            (item.ukuran && item.ukuran.toLowerCase().includes(filterText.toLowerCase())) ||
+            (item.seragam.nama_seragam && item.seragam.nama_seragam.toLowerCase().includes(filterText.toLowerCase())),
     );
 
     const subHeaderComponentMemo = useMemo(() => {
         return (
             <div className=' flex justify-between min-w-full'>
-                <Link href={route('seragam.create')}>
+                <Link href={route('seragam-detail.create')}>
                     <button type="button" className=" flex text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         <svg className="w-[14px] h-[14px] text-center mr-2 mt-0.5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 1v16M1 9h16" />
@@ -49,36 +49,22 @@ export default function Index(props) {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(`/seragam/${id}`);
+                router.delete(`/seragam-detail/${id}`);
                 toastr.success('Data Berhasil Dihapus', 'Sukses!');
             }
         });
     };
 
     const columns = [
-        { name: 'No', selector: (row, index) => index + 1 + (perPage * (currentPage - 1)), width: '10%' },
-        { name: 'Nama Seragam', selector: row => row.nama_seragam, sortable: true, width: '30%' },
-        {
-            name: 'Harga',
-            selector: row => (
-                <NumericFormat
-                    value={row.harga}
-                    displayType={'text'}
-                    thousandSeparator={true}
-                    prefix={'Rp. '}
-                />
-            ),
-            sortable: true,
-            width: '25%'
-        },
+        { name: 'No', selector: (row, index) => index + 1 + (perPage * (currentPage - 1)), width: '8%' },
         {
             name: 'Kategori', selector: row => {
                 let priceText = '';
-                if (row.kategori == 1) {
+                if (row.seragam.kategori == 1) {
                     priceText = 'Seragam PG';
-                } else if (row.kategori == 2) {
+                } else if (row.seragam.kategori == 2) {
                     priceText = 'Seragam TK';
-                } else if (row.kategori == 3) {
+                } else if (row.seragam.kategori == 3) {
                     priceText = 'Seragam SD';
                 } else {
                     priceText = 'Belum Masuk Unit';
@@ -88,11 +74,14 @@ export default function Index(props) {
             sortable: true,
             width: '15%'
         },
+        { name: 'Nama Seragam', selector: row => row.seragam.nama_seragam, sortable: true, width: '25%' },
+        { name: 'Ukuran', selector: row => row.ukuran, sortable: true, width: '15%' },
+        { name: 'Stok', selector: row => row.stok, sortable: true, width: '15%' },
         {
             name: 'Edit | Info | Hapus',
             cell: (row) => (
                 <div className="flex justify-center">
-                    <Link href={route('seragam.edit', row.id)}>
+                    <Link href={route('seragam-detail.edit', row.id)}>
                         <button type="button" className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center m-1">
                             <svg className="w-4 h-4 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                                 <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z" />
@@ -130,7 +119,7 @@ export default function Index(props) {
             <Head title={props.title} />
             <Sidebar />
             <div className="p-4 sm:ml-64 mt-16">
-                <JudulHeader judul={props.title} subJudul="Seragam" />
+                <JudulHeader judul={props.title} subJudul="Ukuran Seragam" />
                 <Modal />
                 <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <DataTable
