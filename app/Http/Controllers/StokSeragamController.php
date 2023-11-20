@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Seragam;
+use App\Models\SeragamDetail;
+use App\Models\StokSeragam;
+use Illuminate\Http\Request;
+
+class StokSeragamController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'stok' => 'required',
+        ], [
+            'stok.required' => "Stok harus diisi",
+        ]);
+
+        $seragam = SeragamDetail::find($request->id);
+        $seragam->stok += $request->stok;
+        $seragam->update();
+
+        $stok = new StokSeragam;
+        $stok->stok = $request->stok;
+        $stok->seragam_detail_id = $seragam->id;
+        $stok->save();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}

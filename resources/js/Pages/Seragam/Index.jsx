@@ -7,6 +7,7 @@ import toastr from 'toastr';
 import DataTable from 'react-data-table-component';
 import { NumericFormat } from 'react-number-format';
 import Modal from '@/Components/Modal';
+import ModalDetailSeragam from '@/Components/Homepage/ModalDetailSeragam';
 
 export default function Index(props) {
     const [filterText, setFilterText] = useState('');
@@ -152,7 +153,7 @@ export default function Index(props) {
                     />
                 </div>
                 {isModalOpen && (
-                    <Modal
+                    <ModalDetailSeragam
                         modalData={modalData}
                         closeModal={() => setIsModalOpen(false)}
                     />

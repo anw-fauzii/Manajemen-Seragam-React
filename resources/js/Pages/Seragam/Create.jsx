@@ -31,7 +31,6 @@ export default function Create(props) {
             }
         }, data)
     }
-    console.log(errors)
     return (
         <div>
             <Head title={props.title} />
