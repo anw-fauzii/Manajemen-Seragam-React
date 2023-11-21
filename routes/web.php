@@ -41,3 +41,4 @@ Route::post('edit-seragam/{id}', [App\Http\Controllers\SeragamController::class,
 Route::resource('seragam-detail', App\Http\Controllers\SeragamDetailController::class)->except('update')->middleware(['auth']);
 Route::post('edit-seragam-detail/{id}', [App\Http\Controllers\SeragamDetailController::class, 'update']);
 Route::resource('stok-seragam', App\Http\Controllers\StokSeragamController::class);
+Route::resource('keranjang', App\Http\Controllers\KeranjangController::class);
