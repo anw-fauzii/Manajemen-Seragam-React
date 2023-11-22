@@ -51,7 +51,7 @@ class SeragamController extends Controller
 
     public function show($id)
     {
-        $seragam = Seragam::where('kategori', $id)->get();
+        $seragam = Seragam::with('seragamDetails')->where('kategori', $id)->get();
         if ($id = 1) {
             $unit = "PG";
         } elseif ($id = 2) {
