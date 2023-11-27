@@ -17,4 +17,8 @@ class Keranjang extends Model
     {
         return $this->belongsTo(SeragamDetail::class);
     }
+    public function seragam()
+    {
+        return $this->belongsTo(Seragam::class);
+    }
 }

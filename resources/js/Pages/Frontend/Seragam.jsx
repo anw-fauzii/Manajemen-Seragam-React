@@ -7,7 +7,6 @@ import ModalFrontend from '@/Components/Homepage/ModalFrontend';
 import { useState } from 'react';
 
 export default function Seragam(props) {
-    console.log(props)
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleInfoClick = (id) => {
@@ -24,7 +23,6 @@ export default function Seragam(props) {
             <div className="">
                 <Navbar />
             </div>
-
             <div className=' flex lg:justify-center flex-col gap-4 mt-16 p-4'>
                 <nav className="flex" aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-3">
@@ -56,7 +54,6 @@ export default function Seragam(props) {
                 </nav>
                 <h2 className="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Daftar Seragam</h2>
             </div>
-
             <div className=' flex justify-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch items-center gap-4 p-4 mb-16'>
                 {props.seragam.length > 0 ? props.seragam.map((data, i) => {
                     return (
@@ -66,7 +63,6 @@ export default function Seragam(props) {
                                     <img className="p-8 rounded-t-lg" src={"/storage/" + data.foto} alt="product image" />
                                     : <img className="p-8 rounded-t-lg" src="/storage/null.png" alt="product image" />
                                 }
-
                             </a>
                             <div className="px-5 pb-5">
                                 <a href="#">
@@ -92,18 +88,20 @@ export default function Seragam(props) {
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <span className="text-2xl font-bold text-gray-900 dark:text-white"><NumericFormat value={data.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
-                                    <button onClick={() => handleInfoClick(data.id)} type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center m-1">
-                                        <svg className="w-4 h-4 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                        </svg>
-                                    </button>
+                                    {data.seragam_details.length > 0 ?
+                                        <button onClick={() => handleInfoClick(data.id)} type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center m-1">
+                                            <svg className="w-4 h-4 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                        </button>
+                                        : <p><em>Kosong</em></p>}
                                 </div>
                             </div>
                         </div>
                     )
                 }) : <p>Belum ada adata</p>}
             </div>
-            <Bottom />
+            <Bottom keranjang={props.keranjang} />
             {isModalOpen && (
                 <ModalFrontend
                     modalData={modalData}

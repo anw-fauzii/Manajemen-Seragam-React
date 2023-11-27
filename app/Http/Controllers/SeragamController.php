@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Keranjang;
 use App\Models\Seragam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -49,8 +50,9 @@ class SeragamController extends Controller
         return to_route('seragam.index');
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
+        $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
         $seragam = Seragam::with('seragamDetails')->where('kategori', $id)->get();
         if ($id = 1) {
             $unit = "PG";
@@ -62,6 +64,7 @@ class SeragamController extends Controller
         return Inertia::render('Frontend/Seragam', [
             'title' => "Daftar Seragam " . $unit,
             'seragam' => $seragam,
+            'keranjang' => $keranjang
         ]);
     }
 

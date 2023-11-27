@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Keranjang;
+use App\Models\Seragam;
 use App\Models\SeragamDetail;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,7 +15,10 @@ class KeranjangController extends Controller
      */
     public function index(Request $request)
     {
-        $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
+        $keranjang = Keranjang::with([
+            'seragam_detail',
+            'seragam_detail.seragam'
+        ])->where('ip_pelanggan', $request->getClientIp())->get();
         return Inertia::render('Frontend/Keranjang', [
             'keranjang' => $keranjang,
         ]);
@@ -33,27 +37,28 @@ class KeranjangController extends Controller
      */
     public function store(Request $request)
     {
-        $seragam = SeragamDetail::where('ukuran', $request->ukuran[$request->seragam_id])
-            ->where('seragam_id', $request->seragam_id)->first();
-        $Keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())
-            ->where('seragam_detail_id', $seragam->id)->first();
+        $Keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->where('seragam_detail_id', $request->ukuran)->first();
+
+        $seragamDetail = SeragamDetail::with('seragam')->findOrFail($request->ukuran);
+
         if ($Keranjang) {
             $jumlahUpdate = $Keranjang->jumlah + $request->jumlah;
             $Keranjang->update([
                 'jumlah' => $jumlahUpdate,
                 'catatan' => $request->catatan,
-                'subtotal' => $seragam->harga * $jumlahUpdate,
+                'subtotal' => $seragamDetail->seragam->harga * $jumlahUpdate,
             ]);
         } else {
+
             Keranjang::create([
-                'seragam_detail_id' => $seragam->id,
+                'seragam_detail_id' => $request->ukuran,
                 'jumlah' => $request->jumlah,
                 'catatan' => $request->catatan,
                 'ip_pelanggan' => $request->getClientIp(),
-                'subtotal' => $seragam->harga * $request->jumlah,
+                'subtotal' =>  $seragamDetail->seragam->harga * $request->jumlah,
             ]);
         }
-        return redirect()->back()->with('success', 'Data berhasil disimpan');
+        return to_route('welcome');
     }
 
     /**
@@ -83,8 +88,10 @@ class KeranjangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Keranjang $keranjang)
+    public function destroy($id)
     {
-        //
+        $seragam = Keranjang::findOrFail($id);
+        $seragam->delete();
+        return redirect()->back()->with('message', 'Data berhasil dihapus');
     }
 }

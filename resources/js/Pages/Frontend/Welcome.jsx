@@ -2,8 +2,10 @@ import { Link, Head } from '@inertiajs/react';
 import Bottom from '@/Layouts/Frontend/Bottom';
 import Navbar from '@/Layouts/Frontend/Navbar';
 import Judul from '@/Components/Judul';
+import React from 'react';
 
-export default function Welcome() {
+export default function Welcome(props) {
+    console.log(props)
     return (
         <div className=' top-0 left-0 min-h-screen bg-gray-100 bg-cover '>
             <Head title="Welcome" />
@@ -15,7 +17,7 @@ export default function Welcome() {
                 <Judul gambar="/storage/TK.jpg" kategori="2" />
                 <Judul gambar="/storage/SD.jpg" kategori="3" />
             </div>
-            <Bottom />
+            <Bottom keranjang={props.keranjang} />
         </div>
     );
 }
