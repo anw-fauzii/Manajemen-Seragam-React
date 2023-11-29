@@ -35,7 +35,7 @@ const ModalFrontend = ({ modalData, closeModal }) => {
                         id="static-modal"
                         data-modal-backdrop="static"
                         tabIndex="-1"
-                        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center md:inset-0 h-[calc(100%-1rem)] min-h-screen bg-gray-900 bg-opacity-50"
+                        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center md:inset-0 h-[calc(100%-1rem)] p-2 min-h-screen bg-gray-900 bg-opacity-50"
                     >
                         <div className=" relative w-full max-w-2xl">
                             <div className="bg-white rounded-lg shadow dark:bg-gray-700">
@@ -76,7 +76,9 @@ const ModalFrontend = ({ modalData, closeModal }) => {
                                                 return (<option key={i} value={data.id}>{data.ukuran}</option>)
                                             })}
                                         </select>
+
                                     </div>
+                                    {errors.ukuran && <p className=" ml-24 text-sm text-red-600 dark:text-red-500">{errors.ukuran}</p>}
                                     <div className="flex overflow-x-auto p-3">
                                         <label for="harga" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mr-16 mt-2">Qty</label>
                                         <input type="number" min="1" onChange={(e) => setData('jumlah', e.target.value)} id="jumlah" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={data.jumlah} />

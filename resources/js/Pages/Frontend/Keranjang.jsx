@@ -1,4 +1,5 @@
 import Bottom from "@/Layouts/Frontend/Bottom";
+import Chekout from "@/Layouts/Frontend/Chekout";
 import Navbar from "@/Layouts/Frontend/Navbar";
 import { Head, router } from "@inertiajs/react";
 import { useState } from "react";
@@ -56,7 +57,7 @@ const Keranjang = (props) => {
                 </nav>
                 <h2 className="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Keranjang Anda</h2>
             </div>
-            <div className=' flex justify-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch items-center gap-3 p-4 mb-16'>
+            <div className=' flex justify-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch items-center gap-3 p-4 mb-32'>
                 {props.keranjang.length > 0 ? props.keranjang.map((data, i) => {
                     return (
                         <div key={i} className="p-4 w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -105,6 +106,9 @@ const Keranjang = (props) => {
                                         <p className=" text-gray-900 dark:text-white mt-1 hidden lg:block">$599</p>
                                     </div>
                                     <div className="lg:flex-1 lg:w-20">
+                                        <p class="text-xs lg:text-base text-gray-900 dark:text-white">{data.catatan}</p>
+                                    </div>
+                                    <div className="lg:flex-1 lg:w-20">
                                         <button onClick={() => handleDelete(data.id)} type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-3 py-2 text-center">
                                             <svg className="w-4 h-4 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
@@ -125,8 +129,11 @@ const Keranjang = (props) => {
                 }
 
             </div>
-
             <Bottom keranjang={props.keranjang} />
+            {props.keranjang.length > 0 ?
+                <Chekout jumlahSubTotal={props.jumlahSubTotal} />
+                : null}
+
         </div >
     );
 };

@@ -5,7 +5,6 @@ import Judul from '@/Components/Judul';
 import React from 'react';
 
 export default function Welcome(props) {
-    console.log(props)
     return (
         <div className=' top-0 left-0 min-h-screen bg-gray-100 bg-cover '>
             <Head title="Welcome" />

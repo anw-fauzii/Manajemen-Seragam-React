@@ -19,8 +19,10 @@ class KeranjangController extends Controller
             'seragam_detail',
             'seragam_detail.seragam'
         ])->where('ip_pelanggan', $request->getClientIp())->get();
+        $jumlahSubTotal = Keranjang::where('ip_pelanggan', $request->getClientIp())->sum('subtotal');
         return Inertia::render('Frontend/Keranjang', [
             'keranjang' => $keranjang,
+            'jumlahSubTotal' => $jumlahSubTotal
         ]);
     }
 
@@ -37,11 +39,17 @@ class KeranjangController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $request->validate([
+            'jumlah' => 'required',
+            'ukuran' => 'required'
+        ], [
+            'jumlah.required' => "Harga harus diisi",
+            'ukuran.required' => "Kategori harus diisi",
+        ]);
         $Keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->where('seragam_detail_id', $request->ukuran)->first();
 
-        $seragamDetail = SeragamDetail::with('seragam')->findOrFail($request->ukuran);
-
         if ($Keranjang) {
+            $seragamDetail = SeragamDetail::with('seragam')->find($request->ukuran);
             $jumlahUpdate = $Keranjang->jumlah + $request->jumlah;
             $Keranjang->update([
                 'jumlah' => $jumlahUpdate,
@@ -49,7 +57,7 @@ class KeranjangController extends Controller
                 'subtotal' => $seragamDetail->seragam->harga * $jumlahUpdate,
             ]);
         } else {
-
+            $seragamDetail = SeragamDetail::with('seragam')->find($request->ukuran);
             Keranjang::create([
                 'seragam_detail_id' => $request->ukuran,
                 'jumlah' => $request->jumlah,

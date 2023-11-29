@@ -28,11 +28,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::resource('seragam', App\Http\Controllers\SeragamController::class)->except('update')->middleware(['auth']);
+Route::resource('seragam', App\Http\Controllers\SeragamController::class)->except('update');
 Route::post('edit-seragam/{id}', [App\Http\Controllers\SeragamController::class, 'update']);
 Route::resource('seragam-detail', App\Http\Controllers\SeragamDetailController::class)->except('update')->middleware(['auth']);
 Route::post('edit-seragam-detail/{id}', [App\Http\Controllers\SeragamDetailController::class, 'update']);
 Route::resource('stok-seragam', App\Http\Controllers\StokSeragamController::class);
 Route::resource('keranjang', App\Http\Controllers\KeranjangController::class);
+Route::resource('pesanan', App\Http\Controllers\PesananController::class);
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'welcome'])->name('welcome');
+Route::get('/checkout', [App\Http\Controllers\FrontendController::class, 'checkout'])->name('checkout');

@@ -15,4 +15,12 @@ class FrontendController extends Controller
             'keranjang' => $keranjang
         ]);
     }
+
+    public function checkout(Request $request)
+    {
+        $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
+        return Inertia::render('Frontend/Checkout', [
+            'keranjang' => $keranjang
+        ]);
+    }
 }
