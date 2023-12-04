@@ -74,7 +74,8 @@ const Keranjang = (props) => {
                                         <p className=" text-gray-900 dark:text-white mt-1"><NumericFormat value={data.seragam_detail.seragam.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></p>
                                     </div>
                                     <div className="flex lg:flex-1 lg:w-20">
-                                        <button onClick={() => kurang(i)} disabled={data.jumlah === 1} className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                                        <p className=" text-gray-900 dark:text-white mt-1">Qty. {data.jumlah}</p>
+                                        {/* <button onClick={() => kurang(i)} disabled={data.jumlah === 1} className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
                                             <span className="sr-only">Quantity button</span>
                                             <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
@@ -100,13 +101,13 @@ const Keranjang = (props) => {
                                             <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                                             </svg>
-                                        </button>
+                                            </button>*/}
                                     </div>
                                     <div className="lg:flex-1 lg:w-20">
-                                        <p className=" text-gray-900 dark:text-white mt-1 hidden lg:block">$599</p>
+                                        <p className=" text-gray-900 dark:text-white mt-1 hidden lg:block"><NumericFormat value={data.seragam_detail.seragam.harga * data.jumlahs} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></p>
                                     </div>
                                     <div className="lg:flex-1 lg:w-20">
-                                        <p class="text-xs lg:text-base text-gray-900 dark:text-white">{data.catatan}</p>
+                                        <p className="text-xs lg:text-base text-gray-900 dark:text-white">{data.catatan}</p>
                                     </div>
                                     <div className="lg:flex-1 lg:w-20">
                                         <button onClick={() => handleDelete(data.id)} type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-3 py-2 text-center">
@@ -122,8 +123,8 @@ const Keranjang = (props) => {
                 })
                     :
                     <div className="">
-                        <svg class="w-44 h-44 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 19 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm1-4H5m0 0L3 4m0 0h5.501M3 4l-.792-3H1m11 3h6m-3 3V1" />
+                        <svg className="w-44 h-44 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 19 20">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm1-4H5m0 0L3 4m0 0h5.501M3 4l-.792-3H1m11 3h6m-3 3V1" />
                         </svg>
                     </div>
                 }

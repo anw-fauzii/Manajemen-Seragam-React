@@ -7,6 +7,7 @@ use App\Models\Pesanan;
 use App\Models\PesananDetail;
 use App\Models\SeragamDetail;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PesananController extends Controller
 {
@@ -15,6 +16,15 @@ class PesananController extends Controller
      */
     public function index()
     {
+        $pesanan = Pesanan::with(
+            'pesanan_detail',
+            'pesanan_detail.seragam_detail',
+            'pesanan_detail.seragam_detail.seragam',
+        )->paginate(100);
+        return Inertia::render('Pesanan/Index', [
+            'title' => "Daftar Pesanan",
+            'pesanan' => $pesanan
+        ]);
     }
 
     /**
@@ -34,7 +44,7 @@ class PesananController extends Controller
         $pesanan = Pesanan::create([
             'nama' => $request->nama,
             'kelas' => $request->kelas,
-            'total_harga' => $Keranjang->sum('subtotal')
+            'total_harga' => $Keranjang->sum('subtotal'),
         ]);
         foreach ($Keranjang as $data) {
             PesananDetail::create([
@@ -72,9 +82,12 @@ class PesananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update($id)
     {
-        //
+        $pesanan = Pesanan::findOrFail($id);
+        $pesanan->status = "1";
+        $pesanan->update();
+        return to_route('pesanan.index');
     }
 
     /**

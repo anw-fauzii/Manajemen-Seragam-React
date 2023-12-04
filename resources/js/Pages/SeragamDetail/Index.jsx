@@ -5,7 +5,6 @@ import JudulHeader from '@/Components/JudulHeader';
 import Swal from 'sweetalert2';
 import toastr from 'toastr';
 import DataTable from 'react-data-table-component';
-import { NumericFormat } from 'react-number-format';
 import Modal from '@/Components/Modal';
 import ModalStok from '@/Components/Homepage/ModalStok';
 

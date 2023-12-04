@@ -6,6 +6,7 @@ use App\Models\Seragam;
 use App\Models\SeragamDetail;
 use App\Models\StokSeragam;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class StokSeragamController extends Controller
 {
@@ -14,7 +15,14 @@ class StokSeragamController extends Controller
      */
     public function index()
     {
-        //
+        $pemasukan = StokSeragam::with(
+            'seragam_detail',
+            'seragam_detail.seragam'
+        )->paginate(100);
+        return Inertia::render('Pemasukan/Index', [
+            'title' => "Daftar Pemasukan",
+            'pemasukan' => $pemasukan,
+        ]);
     }
 
     /**
