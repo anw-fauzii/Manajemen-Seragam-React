@@ -1,22 +1,55 @@
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import React from 'react';
+import { useEffect } from 'react';
 import toastr from 'toastr';
+
 const ModalFrontend = ({ closeModal }) => {
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
+        script.setAttribute('data-client-key', window.midtransClientKey);
+        document.head.appendChild(script);
+
+        return () => {
+            document.head.removeChild(script);
+        };
+    }, []);
+
     const { data, setData, post, errors } = useForm({
         nama: '',
         kelas: ''
     })
+
     const submit = (e) => {
         e.preventDefault()
+
         post('/pesanan', {
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: (response) => {
+                window.snap.pay(response.props.flash.message, {
+                    onSuccess: function (result) {
+                        alert('Payment success!');
+                        console.log(result);
+                    },
+                    onPending: function (result) {
+                        alert('Waiting for your payment!');
+                        console.log(result);
+                    },
+                    onError: function (result) {
+                        alert('Payment failed!');
+                        console.log(result);
+                    },
+                    onClose: function () {
+                        alert('You closed the popup without finishing the payment');
+                    },
+                });
                 toastr.success('Seragam Berhasil Dipesan', 'Sukses!')
                 setData({
                     nama: '',
                     kelas: ''
                 })
-                closeModal()
             },
             onError: () => {
                 toastr.error('Silahkan Periksa Kembali Inputan Anda', 'Error!')
@@ -80,7 +113,7 @@ const ModalFrontend = ({ closeModal }) => {
                                         Pesan
                                     </button>
                                     <button
-                                        onClick={closeModal}
+                                        onClick={closeModal} target="_BLANK"
                                         type="button"
                                         className="ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                                     >

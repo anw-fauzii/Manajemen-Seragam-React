@@ -7,7 +7,10 @@ use App\Models\Pesanan;
 use App\Models\PesananDetail;
 use App\Models\SeragamDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\Return_;
 
 class PesananController extends Controller
 {
@@ -20,7 +23,7 @@ class PesananController extends Controller
             'pesanan_detail',
             'pesanan_detail.seragam_detail',
             'pesanan_detail.seragam_detail.seragam',
-        )->paginate(100);
+        )->get();
         return Inertia::render('Pesanan/Index', [
             'title' => "Daftar Pesanan",
             'pesanan' => $pesanan
@@ -61,6 +64,35 @@ class PesananController extends Controller
             ]);
         }
         Keranjang::where('ip_pelanggan', $request->getClientIp())->delete();
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$isProduction = false;
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => rand(),
+                'gross_amount' => $pesanan->total_harga
+            ),
+            'item_details' => array(),
+            'customer_details' => array(
+                'first_name' => $pesanan->nama,
+                'last_name' => $pesanan->kelas
+            ),
+        );
+        $pesananDetail = PesananDetail::where('ip_pelanggan', $request->getClientIp())->where('pesanan_id', $pesanan->id)->get();
+        foreach ($pesananDetail as $data) {
+            $item = array(
+                'id' => $data->seragam_detail_id,
+                'price' => $data->subtotal,
+                'quantity' => $data->jumlah,
+                'name' => $data->seragam_detail->seragam->nama_seragam . " (" . $data->seragam_detail->ukuran . ")"
+            );
+
+            $params['item_details'][] = $item;
+        }
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return Redirect::back()->with('message', $snapToken);
     }
 
     /**

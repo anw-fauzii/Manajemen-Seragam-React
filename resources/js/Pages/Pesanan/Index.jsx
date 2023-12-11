@@ -9,12 +9,13 @@ import ModalDetailPesanan from '@/Components/Homepage/ModalDetailPesanan';
 import moment from 'moment';
 
 export default function Index(props) {
+    console.log(props)
     const [filterText, setFilterText] = useState('');
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const filteredItems = props.pesanan.data.filter(
+    const filteredItems = props.pesanan.filter(
         item =>
             (item.kode && item.kode.toLowerCase().includes(filterText.toLowerCase()))
     );
@@ -36,7 +37,7 @@ export default function Index(props) {
     }, [filterText]);
 
     const columns = [
-        { name: 'No', selector: (row, index) => index + 1 + (perPage * (currentPage - 1)), width: '8%' },
+        { name: 'No', selector: (row, index) => index + 1, width: '8%' },
         { name: 'Kode Pesanan', selector: row => row.kode, sortable: true, width: '13%' },
         { name: 'Nama Siswa', selector: row => row.nama, sortable: true, width: '20%' },
         { name: 'Kelas', selector: row => row.kelas, sortable: true, width: '10%' },
@@ -79,7 +80,7 @@ export default function Index(props) {
     ];
 
     const handleInfoClick = (id) => {
-        const selectedData = props.pesanan.data.find(item => item.id === id);
+        const selectedData = props.pesanan.find(item => item.id === id);
 
         if (selectedData) {
             setModalData(selectedData);
