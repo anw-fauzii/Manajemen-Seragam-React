@@ -15,6 +15,7 @@ class Seragam extends Model
         'kategori',
         'foto',
         'harga',
+        'harga_dasar'
     ];
 
     /**

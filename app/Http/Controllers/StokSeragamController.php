@@ -48,10 +48,20 @@ class StokSeragamController extends Controller
         $seragam->stok += $request->stok;
         $seragam->update();
 
-        $stok = new StokSeragam;
-        $stok->stok = $request->stok;
-        $stok->seragam_detail_id = $seragam->id;
-        $stok->save();
+        $stok = StokSeragam::firstOrNew(
+            [
+                'seragam_detail_id' => $seragam->id,
+                'created_at' => now()->toDateString(),
+            ]
+        );
+
+        $stok->stok += $request->stok;
+
+        if ($stok->exists) {
+            $stok->update();
+        } else {
+            $stok->save();
+        }
     }
 
     /**

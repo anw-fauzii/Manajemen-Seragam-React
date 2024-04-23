@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_seragam');
             $table->enum('kategori', ["1", "2", "3"]);
-            $table->text('foto');
+            $table->text('foto')->nullable();
             $table->integer('harga');
             $table->timestamps();
         });

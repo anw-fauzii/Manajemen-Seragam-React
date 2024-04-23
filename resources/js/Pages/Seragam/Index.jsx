@@ -58,9 +58,9 @@ export default function Index(props) {
 
     const columns = [
         { name: 'No', selector: (row, index) => index + 1 + (perPage * (currentPage - 1)), width: '10%' },
-        { name: 'Nama Seragam', selector: row => row.nama_seragam, sortable: true, width: '30%' },
+        { name: 'Nama Seragam', selector: row => row.nama_seragam, sortable: true, width: '25%' },
         {
-            name: 'Harga',
+            name: 'Harga Jual',
             selector: row => (
                 <NumericFormat
                     value={row.harga}
@@ -70,8 +70,22 @@ export default function Index(props) {
                 />
             ),
             sortable: true,
-            width: '25%'
+            width: '15%'
         },
+        {
+            name: 'Harga Dasar',
+            selector: row => (
+                <NumericFormat
+                    value={row.harga}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'Rp. '}
+                />
+            ),
+            sortable: true,
+            width: '15%'
+        },
+
         {
             name: 'Kategori', selector: row => {
                 let priceText = '';

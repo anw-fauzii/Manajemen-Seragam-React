@@ -1,5 +1,6 @@
 import { useForm, usePage } from '@inertiajs/react';
 import React from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import toastr from 'toastr';
 
@@ -21,9 +22,14 @@ const ModalFrontend = ({ closeModal }) => {
         nama: '',
         kelas: ''
     })
-
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
     const submit = (e) => {
         e.preventDefault()
+        if (isButtonClicked) {
+            return;
+        }
+
+        setIsButtonClicked(true);
 
         post('/pesanan', {
             preserveScroll: true,
@@ -53,6 +59,7 @@ const ModalFrontend = ({ closeModal }) => {
             },
             onError: () => {
                 toastr.error('Silahkan Periksa Kembali Inputan Anda', 'Error!')
+                setIsButtonClicked(false);
             }
         }, data)
     }
@@ -110,7 +117,7 @@ const ModalFrontend = ({ closeModal }) => {
                                         type="submit"
                                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     >
-                                        Pesan
+                                        {isButtonClicked ? 'Pesan...' : 'Pesan'}
                                     </button>
                                     <button
                                         onClick={closeModal} target="_BLANK"

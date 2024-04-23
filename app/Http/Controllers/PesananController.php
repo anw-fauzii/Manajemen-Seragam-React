@@ -72,7 +72,6 @@ class PesananController extends Controller
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => $pesanan->total_harga
             ),
             'item_details' => array(),
             'customer_details' => array(
@@ -84,7 +83,7 @@ class PesananController extends Controller
         foreach ($pesananDetail as $data) {
             $item = array(
                 'id' => $data->seragam_detail_id,
-                'price' => $data->subtotal,
+                'price' => $data->seragam_detail->seragam->harga,
                 'quantity' => $data->jumlah,
                 'name' => $data->seragam_detail->seragam->nama_seragam . " (" . $data->seragam_detail->ukuran . ")"
             );
