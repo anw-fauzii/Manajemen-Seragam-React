@@ -36,6 +36,7 @@ Route::resource('stok-seragam', App\Http\Controllers\StokSeragamController::clas
 Route::resource('keranjang', App\Http\Controllers\KeranjangController::class);
 Route::resource('pesanan', App\Http\Controllers\PesananController::class)->except('update');
 Route::post('edit-pesanan/{id}', [App\Http\Controllers\PesananController::class, 'update']);
+Route::resource('perhitungan-harga-seragam', App\Http\Controllers\HitungHargaDasarController::class)->except('update');
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'welcome'])->name('welcome');
 Route::get('/checkout', [App\Http\Controllers\FrontendController::class, 'checkout'])->name('checkout');
