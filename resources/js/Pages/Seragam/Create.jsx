@@ -6,7 +6,6 @@ import toastr from 'toastr';
 export default function Create(props) {
     const { data, setData, post, errors, processing } = useForm({
         nama_seragam: '',
-        harga: '',
         kategori: '',
         foto: ''
     })
@@ -22,7 +21,6 @@ export default function Create(props) {
                     kategori: {
                         selected: ''
                     },
-                    harga: '',
                     foto: ''
                 })
             },
@@ -45,7 +43,7 @@ export default function Create(props) {
                             {errors.nama_seragam && <p className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.nama_seragam}</p>}
                         </div>
                         <div className="mb-4">
-                            <label for="kategori" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select your country</label>
+                            <label for="kategori" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Unit Seragam</label>
                             <select id="kategori" onChange={(e) => setData('kategori', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value={""} selected disabled>-- Silahkan Pilih Kategori --</option>
                                 <option value={"1"}>Play Group (PG)</option>
@@ -53,11 +51,6 @@ export default function Create(props) {
                                 <option value={"3"}>Sekolah Dasar (SD)</option>
                             </select>
                             {errors.kategori && <p className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.kategori}</p>}
-                        </div>
-                        <div className="mb-4">
-                            <label for="harga" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
-                            <input type="number" onChange={(e) => setData('harga', e.target.value)} id="harga" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={data.harga} />
-                            {errors.harga && <p className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.harga}</p>}
                         </div>
                         <div className='mb-4'>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload file</label>

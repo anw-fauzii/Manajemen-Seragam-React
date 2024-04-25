@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('kategori', ["1", "2", "3"]);
             $table->text('foto')->nullable();
             $table->integer('harga');
+            $table->integer('harga_desar');
             $table->timestamps();
         });
     }

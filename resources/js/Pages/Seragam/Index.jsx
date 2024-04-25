@@ -60,10 +60,10 @@ export default function Index(props) {
         { name: 'No', selector: (row, index) => index + 1 + (perPage * (currentPage - 1)), width: '10%' },
         { name: 'Nama Seragam', selector: row => row.nama_seragam, sortable: true, width: '25%' },
         {
-            name: 'Harga Jual',
+            name: 'Harga Dasar',
             selector: row => (
                 <NumericFormat
-                    value={row.harga}
+                    value={row.harga_dasar}
                     displayType={'text'}
                     thousandSeparator={true}
                     prefix={'Rp. '}
@@ -73,7 +73,7 @@ export default function Index(props) {
             width: '15%'
         },
         {
-            name: 'Harga Dasar',
+            name: 'Harga Jual',
             selector: row => (
                 <NumericFormat
                     value={row.harga}
