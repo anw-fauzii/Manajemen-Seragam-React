@@ -38,7 +38,7 @@ export default function Index(props) {
 
     const columns = [
         { name: 'No', selector: (row, index) => index + 1, width: '8%' },
-        { name: 'Kode Pesanan', selector: row => row.kode, sortable: true, width: '13%' },
+        { name: 'Kode Pesanan', selector: row => row.kode, sortable: true, width: '12%' },
         { name: 'Nama Siswa', selector: row => row.nama, sortable: true, width: '20%' },
         { name: 'Kelas', selector: row => row.kelas, sortable: true, width: '10%' },
         {

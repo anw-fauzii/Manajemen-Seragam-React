@@ -8,8 +8,10 @@ import DataTable from 'react-data-table-component';
 import { NumericFormat } from 'react-number-format';
 import Modal from '@/Components/Modal';
 import ModalDetailSeragam from '@/Components/Homepage/ModalDetailSeragam';
+import Dropdown from '@/Layouts/Frontend/Dropdown';
 
 export default function Index(props) {
+
     const [filterText, setFilterText] = useState('');
     const [perPage, setPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,14 +27,19 @@ export default function Index(props) {
     const subHeaderComponentMemo = useMemo(() => {
         return (
             <div className=' flex justify-between min-w-full'>
-                <Link href={route('seragam.create')}>
-                    <button type="button" className=" flex text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        <svg className="w-[14px] h-[14px] text-center mr-2 mt-0.5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 1v16M1 9h16" />
-                        </svg>
-                        <span className='flex'>Tambah </span>
-                    </button>
-                </Link>
+                <div className='flex'>
+                    <Link href={route('seragam.create')}>
+                        <button type="button" className=" flex text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            <svg className="w-[14px] h-[14px] text-center mr-2 mt-0.5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 1v16M1 9h16" />
+                            </svg>
+                            <span className='flex'>Tambah </span>
+                        </button>
+                    </Link>
+                    <Dropdown />
+
+
+                </div>
                 <input type='text' placeholder='Klik untuk mencari data' onChange={e => setFilterText(e.target.value)} value={filterText} className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
         );
@@ -58,6 +65,23 @@ export default function Index(props) {
 
     const columns = [
         { name: 'No', selector: (row, index) => index + 1 + (perPage * (currentPage - 1)), width: '10%' },
+        {
+            name: 'Kategori', selector: row => {
+                let priceText = '';
+                if (row.kategori == 1) {
+                    priceText = 'Seragam PG';
+                } else if (row.kategori == 2) {
+                    priceText = 'Seragam TK';
+                } else if (row.kategori == 3) {
+                    priceText = 'Seragam SD';
+                } else {
+                    priceText = 'Belum Masuk Unit';
+                }
+                return <span>{priceText}</span>;
+            },
+            sortable: true,
+            width: '15%'
+        },
         { name: 'Nama Seragam', selector: row => row.nama_seragam, sortable: true, width: '25%' },
         {
             name: 'Harga Dasar',
@@ -82,24 +106,6 @@ export default function Index(props) {
                     prefix={'Rp. '}
                 />
             ),
-            sortable: true,
-            width: '15%'
-        },
-
-        {
-            name: 'Kategori', selector: row => {
-                let priceText = '';
-                if (row.kategori == 1) {
-                    priceText = 'Seragam PG';
-                } else if (row.kategori == 2) {
-                    priceText = 'Seragam TK';
-                } else if (row.kategori == 3) {
-                    priceText = 'Seragam SD';
-                } else {
-                    priceText = 'Belum Masuk Unit';
-                }
-                return <span>{priceText}</span>;
-            },
             sortable: true,
             width: '15%'
         },

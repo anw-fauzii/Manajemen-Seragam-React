@@ -46,21 +46,19 @@ class SeragamController extends Controller
         return to_route('seragam.index');
     }
 
-    public function show($id, Request $request)
+    public function show($id)
     {
-        $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
-        $seragam = Seragam::with('seragamDetails')->where('kategori', $id)->get();
-        if ($id = 1) {
-            $unit = "PG";
-        } elseif ($id = 2) {
-            $unit = "TK";
-        } elseif ($id = 3) {
-            $unit = "SD";
+        $seragam = Seragam::with('seragamDetails')->where('kategori', $id)->paginate(100);
+        if ($id == 1) {
+            $unit = " PG";
+        } elseif ($id == 2) {
+            $unit = " TK";
+        } elseif ($id == 3) {
+            $unit = " SD";
         }
-        return Inertia::render('Frontend/Seragam', [
-            'title' => "Daftar Seragam " . $unit,
+        return Inertia::render('Seragam/Index', [
+            'title' => "Daftar Seragam" . $unit,
             'seragam' => $seragam,
-            'keranjang' => $keranjang
         ]);
     }
 

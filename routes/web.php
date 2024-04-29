@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,3 +40,4 @@ Route::post('edit-perhitungan-harga-seragam/{id}', [App\Http\Controllers\HitungH
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'welcome'])->name('welcome');
 Route::get('/checkout', [App\Http\Controllers\FrontendController::class, 'checkout'])->name('checkout');
+Route::get('/data-seragam/{id}', [App\Http\Controllers\FrontendController::class, 'show'])->name('data-seragam');

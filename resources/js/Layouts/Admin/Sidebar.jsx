@@ -30,41 +30,41 @@ const Sidebar = () => {
                         </div>
                         <div className="flex items-center">
                             <div className="flex items-center ml-3">
-                                <div>
-                                    <button type="button"
+                                <div className="relative">
+                                    <button
+                                        type="button"
                                         className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                                        aria-expanded="false" data-dropdown-toggle="dropdown-user" onClick={() => setIsNavbarOpen(!isNavbarOpen)}>
+                                        aria-expanded="false"
+                                        data-dropdown-toggle="dropdown-user"
+                                        onClick={() => setIsNavbarOpen(!isNavbarOpen)}
+                                    >
                                         <span className="sr-only">Open user menu</span>
                                         <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
                                     </button>
-                                </div>
-                                <div
-                                    className={`z-50 ${isNavbarOpen ? '' : 'hidden'
-                                        }  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
-                                    id="dropdown-user"
-                                >
-                                    <div className="px-4 py-3" role="none">
-                                        <p className="text-sm text-gray-900 dark:text-white" role="none">
-                                            Neil Sims
-                                        </p>
-                                        <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                            neil.sims@flowbite.com
-                                        </p>
+                                    <div className={`fixed z-50 ${isNavbarOpen ? '' : 'hidden'} top-12 right-2 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
+                                        <div className="px-4 py-3 ml-" role="none">
+                                            <p className="text-sm text-gray-900 dark:text-white" role="none">
+                                                Neil Sims
+                                            </p>
+                                            <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                                neil.sims@flowbite.com
+                                            </p>
+                                        </div>
+                                        <ul className="py-1" role="none">
+                                            <li>
+                                                <NavLink href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink href="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink href="/earnings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink href="/sign-out" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</NavLink>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <ul className="py-1" role="none">
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink href={route('seragam.index')} active={route().current('seragam.index') || route().current('seragam.create') || route().current('seragam.edit')}>
+                            <NavLink href={route('seragam.index')} active={route().current('seragam.index') || route().current('seragam.create') || route().current('seragam.edit') || route().current('seragam.show')}>
                                 <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                                     <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                                 </svg>
@@ -127,9 +127,9 @@ const Sidebar = () => {
                         </li>
                         <li>
                             <NavLink href={route('perhitungan-harga-seragam.index')} active={route().current('perhitungan-harga-seragam.index') || route().current('perhitungan-harga-seragam.create') || route().current('perhitungan-harga-seragam.edit')}>
-                                <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M7 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z" clip-rule="evenodd" />
-                                    <path fill-rule="evenodd" d="M2 11a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" clip-rule="evenodd" />
+                                <svg className="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fillRule="evenodd" d="M7 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z" clipRule="evenodd" />
+                                    <path fillRule="evenodd" d="M2 11a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" clipRule="evenodd" />
                                     <path d="M10.5 14.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
                                 </svg>
                                 <span className="flex-1 ml-3 whitespace-nowrap">Harga Seragam</span>
@@ -138,7 +138,7 @@ const Sidebar = () => {
                         <li>
                             <NavLink href={route('logout')} method="post" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3" /> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3" />
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3" /> <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3" />
                                 </svg>
                                 <span className="flex-1 ml-3 whitespace-nowrap">Logout</span>
                             </NavLink>
