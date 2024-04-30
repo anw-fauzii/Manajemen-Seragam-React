@@ -99,7 +99,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink href={route('seragam-detail.index')} active={route().current('seragam-detail.index') || route().current('seragam-detail.create') || route().current('seragam-detail.edit')}>
+                            <NavLink href={route('seragam-detail.index')} active={route().current('seragam-detail.index') || route().current('seragam-detail.create') || route().current('seragam-detail.edit') || route().current('seragam-detail.show')}>
                                 <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                                     <path d="M17 0h-5.768a1 1 0 1 0 0 2h3.354L8.4 8.182A1.003 1.003 0 1 0 9.818 9.6L16 3.414v3.354a1 1 0 0 0 2 0V1a1 1 0 0 0-1-1Z" />
                                     <path d="m14.258 7.985-3.025 3.025A3 3 0 1 1 6.99 6.768l3.026-3.026A3.01 3.01 0 0 1 8.411 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V9.589a3.011 3.011 0 0 1-1.742-1.604Z" />
@@ -126,7 +126,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink href={route('perhitungan-harga-seragam.index')} active={route().current('perhitungan-harga-seragam.index') || route().current('perhitungan-harga-seragam.create') || route().current('perhitungan-harga-seragam.edit')}>
+                            <NavLink href={route('perhitungan-harga-seragam.index')} active={route().current('perhitungan-harga-seragam.index') || route().current('perhitungan-harga-seragam.create') || route().current('perhitungan-harga-seragam.edit') || route().current('perhitungan-harga-seragam.show')}>
                                 <svg className="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path fillRule="evenodd" d="M7 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z" clipRule="evenodd" />
                                     <path fillRule="evenodd" d="M2 11a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z" clipRule="evenodd" />

@@ -1,11 +1,11 @@
 import { Link, usePage } from '@inertiajs/react';
 import React, { useState, } from 'react';
 
-function Dropdown(props) {
+function DropdownAksi(props) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
-        setIsOpen(prevIsOpen => !prevIsOpen); // Use functional form of setState
+        setIsOpen(prevIsOpen => !prevIsOpen);
     };
 
     return (
@@ -32,4 +32,4 @@ function Dropdown(props) {
     );
 }
 
-export default Dropdown;
+export default DropdownAksi;

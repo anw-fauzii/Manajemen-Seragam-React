@@ -55,6 +55,22 @@ class HitungHargaDasarController extends Controller
         return to_route('perhitungan-harga-seragam.index');
     }
 
+    public function show($id)
+    {
+        $HargaDasar = HargaDasar::with('seragam')->join('seragam', 'seragam.id', '=', 'harga_dasar.seragam_id')->where('kategori', $id)->paginate(100);
+        if ($id == 1) {
+            $unit = " PG";
+        } elseif ($id == 2) {
+            $unit = " TK";
+        } elseif ($id == 3) {
+            $unit = " SD";
+        }
+        return Inertia::render('HargaDasar/Index', [
+            'title' => "Harga Seragam" . $unit,
+            'HargaDasar' => $HargaDasar,
+        ]);
+    }
+
     public function edit($id)
     {
         $seragam = Seragam::where('harga', NULL)->get();

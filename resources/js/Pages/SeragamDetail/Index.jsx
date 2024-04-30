@@ -7,9 +7,9 @@ import toastr from 'toastr';
 import DataTable from 'react-data-table-component';
 import Modal from '@/Components/Modal';
 import ModalStok from '@/Components/Homepage/ModalStok';
+import Dropdown from '@/Layouts/Frontend/Dropdown';
 
 export default function Index(props) {
-    console.log(props.seragam.data)
     const [filterText, setFilterText] = useState('');
     const [perPage, setPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
@@ -24,14 +24,17 @@ export default function Index(props) {
     const subHeaderComponentMemo = useMemo(() => {
         return (
             <div className=' flex justify-between min-w-full'>
-                <Link href={route('seragam-detail.create')}>
-                    <button type="button" className=" flex text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        <svg className="w-[14px] h-[14px] text-center mr-2 mt-0.5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 1v16M1 9h16" />
-                        </svg>
-                        <span className='flex'>Tambah </span>
-                    </button>
-                </Link>
+                <div className='flex'>
+                    <Link href={route('seragam-detail.create')}>
+                        <button type="button" className=" flex text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            <svg className="w-[14px] h-[14px] text-center mr-2 mt-0.5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 1v16M1 9h16" />
+                            </svg>
+                            <span className='flex'>Tambah </span>
+                        </button>
+                    </Link>
+                    <Dropdown dataUrl="seragam-detail.show" />
+                </div>
                 <input type='text' placeholder='Klik untuk mencari data' onChange={e => setFilterText(e.target.value)} value={filterText} className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
         );

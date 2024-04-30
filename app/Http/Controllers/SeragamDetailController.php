@@ -56,9 +56,20 @@ class SeragamDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SeragamDetail $seragamDetail)
+    public function show($id)
     {
-        //
+        $seragam = SeragamDetail::with('seragam')->join('seragam', 'seragam.id', '=', 'seragam_detail.seragam_id')->where('kategori', $id)->paginate(100);
+        if ($id == 1) {
+            $unit = " PG";
+        } elseif ($id == 2) {
+            $unit = " TK";
+        } elseif ($id == 3) {
+            $unit = " SD";
+        }
+        return Inertia::render('SeragamDetail/Index', [
+            'title' => "Daftar Ukuran Seragam" . $unit,
+            'seragam' => $seragam,
+        ]);
     }
 
     /**
