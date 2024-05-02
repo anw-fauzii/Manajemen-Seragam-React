@@ -51,7 +51,7 @@ export default function Create(props) {
         post(`/edit-perhitungan-harga-seragam/${props.HargaDasar.id}`, {
             preserveScroll: true,
             onSuccess: () => {
-                toastr.success('Data Berhasil diinput', 'Sukses!')
+                toastr.success('Data Berhasil diperbarui', 'Sukses!')
                 setData({
                     seragam_id: {
                         selected: ''

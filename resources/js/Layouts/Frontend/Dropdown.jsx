@@ -5,7 +5,7 @@ function Dropdown(props) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
-        setIsOpen(prevIsOpen => !prevIsOpen); // Use functional form of setState
+        setIsOpen(prevIsOpen => !prevIsOpen);
     };
 
     return (

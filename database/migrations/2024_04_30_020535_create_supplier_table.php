@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
-        Schema::create('stok_seragam', function (Blueprint $table) {
+        Schema::create('supplier', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('seragam_detail_id')->constrained();
-            $table->foreignId('supplier_id')->constrained();
-            $table->integer('stok');
+            $table->string('kode');
+            $table->string('nama_supplier');
+            $table->string('penanggung_jawab')->nullable();
+            $table->string('telepon')->nullable();
+            $table->string('alamat');
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stok_seragam');
+        Schema::dropIfExists('supplier');
     }
 };

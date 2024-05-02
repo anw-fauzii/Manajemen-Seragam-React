@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
+Route::resource('supplier', App\Http\Controllers\SupplierController::class)->except('update');
+Route::post('edit-supplier/{id}', [App\Http\Controllers\SupplierController::class, 'update']);
 Route::resource('seragam', App\Http\Controllers\SeragamController::class)->except('update');
 Route::post('edit-seragam/{id}', [App\Http\Controllers\SeragamController::class, 'update']);
 Route::resource('seragam-detail', App\Http\Controllers\SeragamDetailController::class)->except('update')->middleware(['auth']);

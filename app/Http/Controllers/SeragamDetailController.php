@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Seragam;
 use App\Models\SeragamDetail;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,10 +15,12 @@ class SeragamDetailController extends Controller
      */
     public function index()
     {
+        $supplier = Supplier::all();
         $seragam = SeragamDetail::with('seragam')->paginate(100);
         return Inertia::render('SeragamDetail/Index', [
             'title' => "Daftar Ukuran Seragam",
             'seragam' => $seragam,
+            'supplier' => $supplier,
         ]);
     }
 

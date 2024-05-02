@@ -45,7 +45,7 @@ export default function Edit(props) {
         post(`/edit-seragam-detail/${props.seragamDetail.id}`, {
             preserveScroll: true,
             onSuccess: () => {
-                toastr.success('Data Berhasil diinput', 'Sukses!')
+                toastr.success('Data Berhasil diperbarui', 'Sukses!')
                 setData({
                     ukuran: '',
                     seragam_id: {

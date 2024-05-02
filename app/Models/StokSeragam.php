@@ -12,6 +12,7 @@ class StokSeragam extends Model
     protected $table = "stok_seragam";
     protected $fillable = [
         'seragam_detail_id',
+        'supplier_id',
         'stok',
     ];
     protected $casts = [

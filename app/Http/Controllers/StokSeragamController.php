@@ -55,6 +55,7 @@ class StokSeragamController extends Controller
             ]
         );
 
+        $stok->supplier_id = $request->supplier_id;
         $stok->stok += $request->stok;
 
         if ($stok->exists) {

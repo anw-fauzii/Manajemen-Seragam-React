@@ -65,7 +65,7 @@ export default function Create(props) {
             <Sidebar />
             <div className="p-4 sm:ml-64 mt-16">
                 <SubJudulHeader judul={props.title} subJudul="Ukuran Seragam" linkSubJudul="/seragam-detail" subSubJudul="Create" />
-                <div className="relative  shadow-md sm:rounded-lg p-3">
+                <div className="relative shadow-md sm:rounded-lg p-3">
                     <form onSubmit={submit}>
                         <div className="mb-4">
                             <label for="seragam_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Seragam</label>
