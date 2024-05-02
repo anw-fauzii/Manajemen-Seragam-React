@@ -29,9 +29,10 @@ export default function Index(props) {
 
     const columns = [
         { name: 'No', selector: (row, index) => index + 1 + (perPage * (currentPage - 1)), width: '8%' },
-        { name: 'Tanggal', selector: row => (moment(row.created_at).utc().format('MM/DD/YYYY')), sortable: true, width: '20%' },
+        { name: 'Tanggal', selector: row => (moment(row.created_at).utc().format('MM/DD/YYYY')), sortable: true, width: '15%' },
+        { name: 'Supplier', selector: row => row.supplier.nama_supplier, sortable: true, width: '15%' },
         { name: 'Nama Seragam', selector: row => row.seragam_detail.seragam.nama_seragam + " (" + row.seragam_detail.ukuran + ") ", sortable: true, width: '30%' },
-        { name: 'Jumlah', selector: row => row.stok, sortable: true, width: '20%' },
+        { name: 'Jumlah', selector: row => row.stok, sortable: true, width: '15%' },
         {
             name: 'Detail',
             cell: (row) => (

@@ -39,7 +39,7 @@ export default function Index(props) {
     const columns = [
         { name: 'No', selector: (row, index) => index + 1, width: '8%' },
         { name: 'Kode Pesanan', selector: row => row.kode, sortable: true, width: '12%' },
-        { name: 'Nama Siswa', selector: row => row.nama, sortable: true, width: '20%' },
+        { name: 'Nama Siswa', selector: row => row.nama, sortable: true, width: '15%' },
         { name: 'Kelas', selector: row => row.kelas, sortable: true, width: '10%' },
         {
             name: 'Total Harga',
@@ -63,7 +63,7 @@ export default function Index(props) {
                 }
             }, sortable: true
         },
-        { name: 'Tanggal', selector: row => (moment(row.created_at).utc().format('MM/DD/YYYY')), sortable: true, width: '10%' },
+        { name: 'Tanggal', selector: row => (moment(row.created_at).utc().format('MM/DD/YYYY')), sortable: true, width: '15%' },
         {
             name: 'Detail',
             cell: (row) => (

@@ -24,4 +24,9 @@ class StokSeragam extends Model
     {
         return $this->belongsTo(SeragamDetail::class);
     }
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 }

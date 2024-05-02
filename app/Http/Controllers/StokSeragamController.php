@@ -17,7 +17,8 @@ class StokSeragamController extends Controller
     {
         $pemasukan = StokSeragam::with(
             'seragam_detail',
-            'seragam_detail.seragam'
+            'seragam_detail.seragam',
+            'supplier'
         )->paginate(100);
         return Inertia::render('Pemasukan/Index', [
             'title' => "Daftar Pemasukan",
@@ -49,10 +50,8 @@ class StokSeragamController extends Controller
         $seragam->update();
 
         $stok = StokSeragam::firstOrNew(
-            [
-                'seragam_detail_id' => $seragam->id,
-                'created_at' => now()->toDateString(),
-            ]
+            ['seragam_detail_id' => $seragam->id],
+            ['created_at' => now()->toDateString()]
         );
 
         $stok->supplier_id = $request->supplier_id;
