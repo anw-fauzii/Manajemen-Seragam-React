@@ -22,5 +22,5 @@
         @inertia
         
     </body>
-    <script src="{{asset('flowbite.min.js')}}"></script>
+    <script src={{asset('flowbite.min.js')}}></script>
 </html>

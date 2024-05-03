@@ -75,11 +75,9 @@ class SeragamController extends Controller
     {
         $validator = $request->validate([
             'nama_seragam' => 'required',
-            'harga' => ['required', 'max:11'],
             'kategori' => 'required'
         ], [
             'nama_seragam.required' => "Nama seragam harus diisi",
-            'harga.required' => "Harga harus diisi",
             'kategori.required' => "Kategori harus diisi",
             'harga.max' => "Maksimal input"
         ]);
