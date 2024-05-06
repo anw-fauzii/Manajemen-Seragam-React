@@ -12,7 +12,7 @@ class SeragamController extends Controller
 {
     public function index(Request $request)
     {
-        $seragam = Seragam::with('seragamDetails')->paginate(100);
+        $seragam = Seragam::with('seragamDetail')->paginate(100);
         return Inertia::render('Seragam/Index', [
             'title' => "Daftar Seragam",
             'seragam' => $seragam,
@@ -48,7 +48,7 @@ class SeragamController extends Controller
 
     public function show($id)
     {
-        $seragam = Seragam::with('seragamDetails')->where('kategori', $id)->paginate(100);
+        $seragam = Seragam::with('seragamDetail')->where('kategori', $id)->paginate(100);
         if ($id == 1) {
             $unit = " PG";
         } elseif ($id == 2) {

@@ -37,10 +37,9 @@ export default function Index(props) {
     }, [filterText]);
 
     const columns = [
-        { name: 'No', selector: (row, index) => index + 1, width: '8%' },
+        { name: 'No', selector: (row, index) => index + 1, width: '7%' },
         { name: 'Kode Pesanan', selector: row => row.kode, sortable: true, width: '12%' },
-        { name: 'Nama Siswa', selector: row => row.nama, sortable: true, width: '15%' },
-        { name: 'Kelas', selector: row => row.kelas, sortable: true, width: '10%' },
+        { name: 'Nama Siswa', selector: row => row.nama + " " + "(" + row.kelas + ")", sortable: true, width: '25%' },
         {
             name: 'Total Harga',
             selector: row => (
@@ -61,7 +60,7 @@ export default function Index(props) {
                 } else {
                     return <span class=" bg-blue-600 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300" > Selesai</span>
                 }
-            }, sortable: true
+            }, sortable: true, width: '12%'
         },
         { name: 'Tanggal', selector: row => (moment(row.created_at).utc().format('MM/DD/YYYY')), sortable: true, width: '15%' },
         {
@@ -75,7 +74,7 @@ export default function Index(props) {
                     </button>
                 </div>
             ),
-            width: '15%'
+            width: '14%'
         },
     ];
 

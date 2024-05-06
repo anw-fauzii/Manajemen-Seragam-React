@@ -27,7 +27,7 @@ class Seragam extends Model
         'id' => 'integer',
     ];
 
-    public function seragamDetails(): HasMany
+    public function seragamDetail(): HasMany
     {
         return $this->hasMany(SeragamDetail::class);
     }

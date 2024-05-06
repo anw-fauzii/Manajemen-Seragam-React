@@ -39,6 +39,7 @@ Route::resource('pesanan', App\Http\Controllers\PesananController::class)->excep
 Route::post('edit-pesanan/{id}', [App\Http\Controllers\PesananController::class, 'update']);
 Route::resource('perhitungan-harga-seragam', App\Http\Controllers\HitungHargaDasarController::class)->except('update');
 Route::post('edit-perhitungan-harga-seragam/{id}', [App\Http\Controllers\HitungHargaDasarController::class, 'update']);
+Route::resource('laporan-laba-rugi', App\Http\Controllers\LaporanLabaRugiController::class);
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'welcome'])->name('welcome');
 Route::get('/checkout', [App\Http\Controllers\FrontendController::class, 'checkout'])->name('checkout');

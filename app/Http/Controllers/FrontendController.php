@@ -28,7 +28,7 @@ class FrontendController extends Controller
     public function show($id, Request $request)
     {
         $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
-        $seragam = Seragam::with('seragamDetails')->where('kategori', $id)->get();
+        $seragam = Seragam::with('seragamDetail')->where('kategori', $id)->get();
         if ($id = 1) {
             $unit = "PG";
         } elseif ($id = 2) {
