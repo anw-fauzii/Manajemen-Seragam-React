@@ -48,6 +48,7 @@ class PesananController extends Controller
             'nama' => $request->nama,
             'kelas' => $request->kelas,
             'total_harga' => $Keranjang->sum('subtotal'),
+            'status' => FALSE
         ]);
         foreach ($Keranjang as $data) {
             PesananDetail::create([
