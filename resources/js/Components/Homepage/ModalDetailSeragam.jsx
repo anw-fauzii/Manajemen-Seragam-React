@@ -58,7 +58,7 @@ const ModalDetailSeragam = ({ modalData, closeModal }) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {modalData.seragam_details.length > 0 ? modalData.seragam_details.map((data, i) => (
+                                                {modalData.seragam_detail.length > 0 ? modalData.seragam_detail.map((data, i) => (
                                                     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                                         <td key={i} className="px-6 py-4">
                                                             {data.ukuran}

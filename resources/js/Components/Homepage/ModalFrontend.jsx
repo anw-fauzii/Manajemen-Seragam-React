@@ -72,7 +72,7 @@ const ModalFrontend = ({ modalData, closeModal }) => {
                                         <label for="ukuran" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mr-10 mt-2">Ukuran</label>
                                         <select id="ukuran" onChange={(e) => setData('ukuran', e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             <option value={""} selected disabled>-- Silahkan Pilih Ukuran --</option>
-                                            {modalData.seragam_details.map((data, i) => {
+                                            {modalData.seragam_detail.map((data, i) => {
                                                 if (data.stok > 0) {
                                                     return (<option key={i} value={data.id}>{data.ukuran}</option>);
                                                 } else {

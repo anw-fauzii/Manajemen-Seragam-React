@@ -7,8 +7,8 @@
         <title inertia>{{ config('app.name') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <Link replace rel="preconnect" href="https://fonts.bunny.net">
+        <Link replace href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <script>
             window.midtransClientKey = @json(config('midtrans.client_key'));
         </script>

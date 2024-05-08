@@ -66,7 +66,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <div>
                         <p className="text-sm mt-2 text-gray-800">
                             Your email address is unverified.
-                            <Link
+                            <Link replace
                                 href={route('verification.send')}
                                 method="post"
                                 as="button"

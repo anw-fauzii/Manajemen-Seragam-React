@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const Sidebar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-    const [isMultipleOpen, setIsMultipleOpen] = useState(false);
 
     return (
         <div>

@@ -30,7 +30,7 @@ export default function VerifyEmail({ status }) {
                 <div className="mt-4 flex items-center justify-between">
                     <PrimaryButton disabled={processing}>Resend Verification Email</PrimaryButton>
 
-                    <Link
+                    <Link replace
                         href={route('logout')}
                         method="post"
                         as="button"

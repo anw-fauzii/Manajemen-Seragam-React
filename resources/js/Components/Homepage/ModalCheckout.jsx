@@ -31,7 +31,7 @@ const ModalFrontend = ({ closeModal }) => {
 
         setIsButtonClicked(true);
 
-        post('/pesanan', {
+        post('/pesan-seragam', {
             preserveScroll: true,
             onSuccess: (response) => {
                 window.snap.pay(response.props.flash.message, {

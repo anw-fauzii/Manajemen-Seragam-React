@@ -18,13 +18,13 @@ function Dropdown(props) {
             <div id="dropdown" className={`absolute z-10 ${isOpen ? "" : "hidden"} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                     <li>
-                        <Link href={route(props.dataUrl, 1)} className="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PG</Link>
+                        <Link replace href={route(props.dataUrl, 1)} className="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PG</Link>
                     </li>
                     <li>
-                        <Link href={route(props.dataUrl, 2)} className="block text-left  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">TK</Link>
+                        <Link replace href={route(props.dataUrl, 2)} className="block text-left  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">TK</Link>
                     </li>
                     <li>
-                        <Link href={route(props.dataUrl, 3)} className="block text-left  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">SD</Link>
+                        <Link replace href={route(props.dataUrl, 3)} className="block text-left  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">SD</Link>
                     </li>
                 </ul>
             </div>
