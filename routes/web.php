@@ -42,6 +42,7 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
 Route::resource('keranjang', App\Http\Controllers\KeranjangController::class);
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'welcome'])->name('welcome');
+Route::get('/detail-seragam/{id}', [App\Http\Controllers\FrontendController::class, 'detail'])->name('detail');
 Route::get('/checkout', [App\Http\Controllers\FrontendController::class, 'checkout'])->name('checkout');
 Route::get('/data-seragam/{id}', [App\Http\Controllers\FrontendController::class, 'show'])->name('data-seragam');
 Route::post('/pesan-seragam', [App\Http\Controllers\FrontendController::class, 'store'])->name('pesan-seragam');

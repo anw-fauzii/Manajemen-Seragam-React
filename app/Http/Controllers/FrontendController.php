@@ -9,6 +9,7 @@ use App\Models\Seragam;
 use App\Models\SeragamDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
 
 class FrontendController extends Controller
@@ -44,6 +45,17 @@ class FrontendController extends Controller
             'title' => "Daftar Seragam " . $unit,
             'seragam' => $seragam,
             'keranjang' => $keranjang
+        ]);
+    }
+
+    public function detail($id, Request $request)
+    {
+        $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
+        $seragam = Seragam::with('seragamDetail')->findOrFail($id);
+        return Inertia::render('Frontend/Detail', [
+            'title' => "Daftar Seragam ",
+            'keranjang' => $keranjang,
+            'seragam' => $seragam
         ]);
     }
 

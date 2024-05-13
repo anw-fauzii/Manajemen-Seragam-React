@@ -79,7 +79,6 @@ class SeragamController extends Controller
         ], [
             'nama_seragam.required' => "Nama seragam harus diisi",
             'kategori.required' => "Kategori harus diisi",
-            'harga.max' => "Maksimal input"
         ]);
         $seragam = Seragam::findOrFail($id);
         if ($request->file('foto')) {
@@ -90,7 +89,6 @@ class SeragamController extends Controller
             $seragam->foto = $file;
         }
         $seragam->nama_seragam = $request->nama_seragam;
-        $seragam->harga = $request->harga;
         $seragam->kategori = $request->kategori;
         $seragam->update();
         return to_route('seragam.index');

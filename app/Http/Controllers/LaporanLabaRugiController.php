@@ -14,10 +14,21 @@ class LaporanLabaRugiController extends Controller
      */
     public function index()
     {
+        $total_hpp = 0;
+        $total_penjualan = 0;
         $seragam = Seragam::with('seragamDetail')->paginate(100);
+        foreach ($seragam as $data) {
+            $total_stok = $data->seragamDetail()->sum('stok');
+            $hpp = $total_stok * $data->harga_dasar;
+            $penjualan = $total_stok * $data->harga;
+            $total_hpp += $hpp;
+            $total_penjualan += $penjualan;
+        }
         return Inertia::render('LabaRugi/Index', [
             'title' => "Laporan Laba Rugi",
-            'seragam' => $seragam
+            'seragam' => $seragam,
+            'total_hpp' => $total_hpp,
+            'total_penjualan' => $total_penjualan,
         ]);
     }
 
@@ -42,6 +53,8 @@ class LaporanLabaRugiController extends Controller
      */
     public function show(string $id)
     {
+        $total_hpp = 0;
+        $total_penjualan = 0;
         $seragam = Seragam::with('seragamDetail')->where('kategori', $id)->paginate(100);
         if ($id == 1) {
             $unit = " PG";
@@ -50,9 +63,18 @@ class LaporanLabaRugiController extends Controller
         } elseif ($id == 3) {
             $unit = " SD";
         }
+        foreach ($seragam as $data) {
+            $total_stok = $data->seragamDetail()->sum('stok');
+            $hpp = $total_stok * $data->harga_dasar;
+            $penjualan = $total_stok * $data->harga;
+            $total_hpp += $hpp;
+            $total_penjualan += $penjualan;
+        }
         return Inertia::render('LabaRugi/Index', [
             'title' => "Laporan Laba Rugi" . $unit,
             'seragam' => $seragam,
+            'total_hpp' => $total_hpp,
+            'total_penjualan' => $total_penjualan,
         ]);
     }
 

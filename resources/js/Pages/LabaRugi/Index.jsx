@@ -11,7 +11,7 @@ import Dropdown from '@/Layouts/Frontend/Dropdown';
 import { NumericFormat } from 'react-number-format';
 
 export default function Index(props) {
-    console.log(props.seragam)
+    console.log(props.seragam.data)
     const [filterText, setFilterText] = useState('');
     const [perPage, setPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
@@ -127,7 +127,62 @@ export default function Index(props) {
             <div className="p-4 sm:ml-64 mt-16">
                 <JudulHeader judul={props.title} subJudul="Laporan Laba Rugi" />
                 <Modal />
-                <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div className="grid lg:grid-cols-3 gap-3">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 flex items-center justify-between">
+                        <div>
+                            <h2 className="text-lg font-semibold text-red-800 mb-2">Hasil Pokok Penjualan</h2>
+                            <p className="text-xl font-bold text-red-700">
+                                <NumericFormat
+                                    value={props.total_hpp}
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    prefix={'Rp. '}
+                                />
+                            </p>
+                            <p className="text-sm text-red-600">Bulan ini</p>
+                        </div>
+                        <svg class="w-14 h-14 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5" />
+                        </svg>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 flex items-center justify-between">
+                        <div>
+                            <h2 className="text-lg font-semibold text-red-800 mb-2">Penjualan</h2>
+                            <p className="text-xl font-bold text-red-700">
+                                <NumericFormat
+                                    value={props.total_penjualan}
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    prefix={'Rp. '}
+                                />
+                            </p>
+                            <p className="text-sm text-red-600">Bulan ini</p>
+                        </div>
+                        <svg class="w-14 h-14 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
+                        </svg>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 flex items-center justify-between">
+                        <div>
+                            <h2 className="text-lg font-semibold text-red-800 mb-2">Laba - Rugi</h2>
+                            <p className="text-xl font-bold text-red-700">
+                                <NumericFormat
+                                    value={props.total_penjualan - props.total_hpp}
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    prefix={'Rp. '}
+                                />
+                            </p>
+                            <p className="text-sm text-red-600">Bulan ini</p>
+                        </div>
+
+                        <svg className="w-14 h-14 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 14a3 3 0 0 1 3-3h4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-4a3 3 0 0 1-3-3Zm3-1a1 1 0 1 0 0 2h4v-2h-4Z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M12.293 3.293a1 1 0 0 1 1.414 0L16.414 6h-2.828l-1.293-1.293a1 1 0 0 1 0-1.414ZM12.414 6 9.707 3.293a1 1 0 0 0-1.414 0L5.586 6h6.828ZM4.586 7l-.056.055A2 2 0 0 0 3 9v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2h-4a5 5 0 0 1 0-10h4a2 2 0 0 0-1.53-1.945L17.414 7H4.586Z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+                <div className="mt-3 w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <DataTable
                         columns={columns}
                         data={filteredItems}
