@@ -22,13 +22,8 @@ class DashboardController extends Controller
                 ->select(DB::raw('YEAR(created_at) as year'), DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as total'))
                 ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
                 ->get();
-
-            // Initialize an array to hold the formatted data
             $seriesData = [];
-
-            // Loop through each item in $jumlah_pesanan and format it for Highcharts
             foreach ($bulan_pesanan as $item) {
-                // Define month names (optional, you can also use month numbers directly)
                 $monthNames = [
                     1 => 'Januari',
                     2 => 'Februari',
@@ -43,11 +38,9 @@ class DashboardController extends Controller
                     11 => 'November',
                     12 => 'Desember',
                 ];
-
-                // Format the data into an associative array with 'name' and 'data' keys
                 $seriesData[$item->year][] = [
-                    'name' => $monthNames[$item->month], // Month name
-                    'data' => [(int) $item->total] // Total orders for the month
+                    'name' => $monthNames[$item->month],
+                    'data' => [(int) $item->total]
                 ];
             }
 

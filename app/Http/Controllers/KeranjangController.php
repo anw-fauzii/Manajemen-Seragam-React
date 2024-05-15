@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Keranjang;
+use App\Models\Pesanan;
+use App\Models\PesananDetail;
 use App\Models\Seragam;
 use App\Models\SeragamDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class KeranjangController extends Controller
@@ -43,13 +46,12 @@ class KeranjangController extends Controller
             'jumlah' => 'required',
             'ukuran' => 'required'
         ], [
-            'jumlah.required' => "Harga harus diisi",
-            'ukuran.required' => "Kategori harus diisi",
+            'jumlah.required' => "Jumlah harus diisi",
+            'ukuran.required' => "Ukuran seragam harus diisi",
         ]);
         $Keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->where('seragam_detail_id', $request->ukuran)->first();
-
+        $seragamDetail = SeragamDetail::with('seragam')->find($request->ukuran);
         if ($Keranjang) {
-            $seragamDetail = SeragamDetail::with('seragam')->find($request->ukuran);
             $jumlahUpdate = $Keranjang->jumlah + $request->jumlah;
             $Keranjang->update([
                 'jumlah' => $jumlahUpdate,
@@ -57,7 +59,6 @@ class KeranjangController extends Controller
                 'subtotal' => $seragamDetail->seragam->harga * $jumlahUpdate,
             ]);
         } else {
-            $seragamDetail = SeragamDetail::with('seragam')->find($request->ukuran);
             Keranjang::create([
                 'seragam_detail_id' => $request->ukuran,
                 'jumlah' => $request->jumlah,

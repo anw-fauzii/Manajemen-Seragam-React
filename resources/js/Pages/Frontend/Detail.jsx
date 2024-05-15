@@ -2,21 +2,43 @@ import Bottom from "@/Layouts/Frontend/Bottom";
 import Navbar from "@/Layouts/Frontend/Navbar";
 import { Head, useForm } from "@inertiajs/react";
 import { Carousel } from "flowbite-react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
-import toastr from "toastr";
+import toastr, { error } from "toastr";
 
 export default function Detail(props) {
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedSize2, setSelectedSize2] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showForm, setShowForm] = useState(false);
+    const [chekout, setCheckout] = useState(false)
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
+        script.setAttribute('data-client-key', window.midtransClientKey);
+        document.head.appendChild(script);
+
+        return () => {
+            document.head.removeChild(script);
+        };
+    }, []);
+
+    const handleBeliSekarangClick = () => {
+        setShowForm(true);
+        setCheckout(true);
+    };
 
     const { data, setData, post, errors } = useForm({
         jumlah: '',
         id: props.seragam.id,
         ukuran: '',
-        catatan: ''
+        catatan: '',
+        nama: '',
+        kelas: ''
     })
 
     const handleSubmit = (e) => {
@@ -25,19 +47,67 @@ export default function Detail(props) {
 
         post('/keranjang', {
             preserveScroll: true,
-            onSuccess: () => {
-                toastr.success('Data Berhasil Dimasukan ke Keranjang', 'Sukses!');
+            onSuccess: (response) => {
+                toastr.success('Data berhasil dimasukan ke keranjang', 'Sukses!');
                 setData({
                     jumlah: '',
                     id: props.seragam.id,
                     ukuran: '',
-                    catatan: ''
+                    catatan: '',
+                    nama: '',
+                    kelas: '',
                 });
-                closeModal();
-                setIsSubmitting(false); // Reset isSubmitting setelah sukses
+                setIsSubmitting(false);
             },
-            onError: () => {
-                toastr.error('Silahkan pilih ukuran baju terlebih dahulu', 'Error!');
+            onError: (error) => {
+                if (error) {
+                    Object.values(error).forEach(error => {
+                        toastr.warning(error, 'Error');
+                    });
+                } else {
+                    toastr.error('Data gagal disimpan', 'Error')
+                }
+
+                setIsSubmitting(false); // Reset isSubmitting setelah error
+            }
+        }, data);
+    };
+    const handlePayment = (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        post('/payment-sekarang', {
+            preserveScroll: true,
+            onSuccess: (response) => {
+                window.snap.pay(response.props.flash.message, {
+                    onSuccess: function (result) {
+                        alert('Payment success!');
+                        console.log(result);
+                    },
+                    onPending: function (result) {
+                        alert('Waiting for your payment!');
+                        console.log(result);
+                    },
+                    onError: function (result) {
+                        alert('Payment failed!');
+                        console.log(result);
+                    },
+                    onClose: function () {
+                        alert('You closed the popup without finishing the payment');
+                    },
+                });
+                toastr.success('Data Berhasil dipesan', 'Sukses!');
+                setIsSubmitting(false);
+            },
+            onError: (error) => {
+                if (error) {
+                    Object.values(error).forEach(error => {
+                        toastr.warning(error, 'Error');
+                    });
+                } else {
+                    toastr.error('Data gagal disimpan', 'Error')
+                }
+
                 setIsSubmitting(false); // Reset isSubmitting setelah error
             }
         }, data);
@@ -69,7 +139,6 @@ export default function Detail(props) {
         setQuantity(value);
         setData('jumlah', value);
     };
-
 
     return (
         <div className=' min-h-screen bg-white bg-cover '>
@@ -184,7 +253,7 @@ export default function Detail(props) {
                                 </div>
                             </div>
                             <form onSubmit={handleSubmit}>
-                                <div className="grid grid-cols-3 gap-5 mt-3">
+                                <div className="grid grid-cols-3 gap-5 max-lg:gap-3 mt-3">
                                     <div>Ukuran</div>
                                     <div className="grid grid-cols-5 gap-2 col-span-2">
                                         {props.seragam.seragam_detail.map((data, i) => (
@@ -209,7 +278,7 @@ export default function Detail(props) {
                                         ))}
                                     </div>
                                     <div>Jenis</div>
-                                    <div class="grid grid-cols-2 gap-2 col-span-2">
+                                    <div className="grid grid-cols-2 gap-2 col-span-2">
                                         {['Panjang', 'Pendek'].map((panjangPendek, i) => (
                                             <label
                                                 key={i}
@@ -288,6 +357,18 @@ export default function Detail(props) {
                                         </div>
                                     </div>
                                 </div>
+                                {showForm && (
+                                    <div className="grid grid-cols-3 gap-5 mt-5">
+                                        <div>Nama</div>
+                                        <div className="col-span-2">
+                                            <input type="text" onChange={(e) => setData('nama', e.target.value)} id="nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
+                                        </div>
+                                        <div>Kelas</div>
+                                        <div className="col-span-2">
+                                            <input type="text" onChange={(e) => setData('kelas', e.target.value)} id="kelas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="grid lg:grid-cols-2 mt-6 lg:gap-3">
                                     <button
                                         type="submit"
@@ -319,28 +400,76 @@ export default function Detail(props) {
                                         </svg>
                                         {isSubmitting ? 'Menambah...' : 'Tambah ke Keranjang'}
                                     </button>
-                                    <a
-                                        href="#"
-                                        title=""
-                                        className=" max-lg:mt-2 flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-blue-600 rounded-lg border border-gray-200 hover:bg-blue-400 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                                        role="button"
-                                    >
-                                        <svg
-                                            className="w-5 h-5 -ms-2 me-2"
-                                            aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                                        </svg>
 
-                                        Beli Sekarang
-                                    </a>
+                                    {chekout ? (
+                                        <button
+                                            type="submit"
+                                            title=""
+                                            className={`flex max-lg:mt-2 items-center justify-center py-2.5 px-5 text-sm font-medium focus:outline-none rounded-lg border transition ${isSubmitting
+                                                ? 'text-gray-400 bg-gray-200 border-gray-200 cursor-not-allowed'
+                                                : ' text-white focus:outline-none bg-blue-600 rounded-lg border border-gray-200 hover:bg-blue-400 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700'
+                                                }`}
+                                            role="button"
+                                            onClick={handlePayment}
+                                            disabled={isSubmitting}
+                                        >
+                                            <svg
+                                                className="w-5 h-5 -ms-2 me-2"
+                                                aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke="currentColor"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
+                                                />
+                                            </svg>
+                                            {isSubmitting ? 'Checkout...' : 'Checkout'}
+                                        </button>
+                                    ) :
+                                        <a
+                                            href="#"
+                                            title=""
+                                            className=" max-lg:mt-2 flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-blue-600 rounded-lg border border-gray-200 hover:bg-blue-400 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                            role="button"
+                                            onClick={handleBeliSekarangClick}
+                                        >
+                                            <svg
+                                                className="w-5 h-5 -ms-2 me-2"
+                                                aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                            </svg>
+
+                                            Beli Sekarang
+                                        </a>}
                                 </div>
                             </form>
+
+                            <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+
+                            <p className="mb-6 text-gray-500 dark:text-gray-400">
+                                Studio quality three mic array for crystal clear calls and voice
+                                recordings. Six-speaker sound system for a remarkably robust and
+                                high-quality audio experience. Up to 256GB of ultrafast SSD storage.
+                            </p>
+
+                            <p className="text-gray-500 dark:text-gray-400">
+                                Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
+                                Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
+                                Magic Keyboard or Magic Keyboard with Touch ID.
+                            </p>
                         </div>
                     </div>
                 </div>

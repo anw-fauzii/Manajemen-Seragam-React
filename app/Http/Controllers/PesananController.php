@@ -6,8 +6,10 @@ use App\Models\Keranjang;
 use App\Models\Pesanan;
 use App\Models\PesananDetail;
 use App\Models\SeragamDetail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use PhpParser\Node\Stmt\Return_;
@@ -19,15 +21,20 @@ class PesananController extends Controller
      */
     public function index()
     {
-        $pesanan = Pesanan::with(
-            'pesanan_detail',
-            'pesanan_detail.seragam_detail',
-            'pesanan_detail.seragam_detail.seragam',
-        )->get();
-        return Inertia::render('Pesanan/Index', [
-            'title' => "Daftar Pesanan",
-            'pesanan' => $pesanan
-        ]);
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('admin')) {
+            $pesanan = Pesanan::with(
+                'pesanan_detail',
+                'pesanan_detail.seragam_detail',
+                'pesanan_detail.seragam_detail.seragam',
+            )->get();
+            return Inertia::render('Pesanan/Index', [
+                'title' => "Daftar Pesanan",
+                'pesanan' => $pesanan
+            ]);
+        } else {
+            return Inertia::render('Error/404');
+        }
     }
 
     /**
@@ -116,10 +123,15 @@ class PesananController extends Controller
      */
     public function update($id)
     {
-        $pesanan = Pesanan::findOrFail($id);
-        $pesanan->status = "1";
-        $pesanan->update();
-        return to_route('pesanan.index');
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('admin')) {
+            $pesanan = Pesanan::findOrFail($id);
+            $pesanan->status = "1";
+            $pesanan->update();
+            return to_route('pesanan.index');
+        } else {
+            return Inertia::render('Error/404');
+        }
     }
 
     /**

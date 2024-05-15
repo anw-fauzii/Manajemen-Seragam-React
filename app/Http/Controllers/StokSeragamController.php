@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Seragam;
 use App\Models\SeragamDetail;
 use App\Models\StokSeragam;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class StokSeragamController extends Controller
@@ -15,15 +17,20 @@ class StokSeragamController extends Controller
      */
     public function index()
     {
-        $pemasukan = StokSeragam::with(
-            'seragam_detail',
-            'seragam_detail.seragam',
-            'supplier'
-        )->paginate(100);
-        return Inertia::render('Pemasukan/Index', [
-            'title' => "Daftar Pemasukan",
-            'pemasukan' => $pemasukan,
-        ]);
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('admin')) {
+            $pemasukan = StokSeragam::with(
+                'seragam_detail',
+                'seragam_detail.seragam',
+                'supplier'
+            )->paginate(100);
+            return Inertia::render('Pemasukan/Index', [
+                'title' => "Daftar Pemasukan",
+                'pemasukan' => $pemasukan,
+            ]);
+        } else {
+            return Inertia::render('Error/404');
+        }
     }
 
     /**
@@ -39,28 +46,33 @@ class StokSeragamController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'stok' => 'required',
-        ], [
-            'stok.required' => "Stok harus diisi",
-        ]);
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('admin')) {
+            $request->validate([
+                'stok' => 'required',
+            ], [
+                'stok.required' => "Stok harus diisi",
+            ]);
 
-        $seragam = SeragamDetail::find($request->id);
-        $seragam->stok += $request->stok;
-        $seragam->update();
+            $seragam = SeragamDetail::find($request->id);
+            $seragam->stok += $request->stok;
+            $seragam->update();
 
-        $stok = StokSeragam::firstOrNew(
-            ['seragam_detail_id' => $seragam->id],
-            ['created_at' => now()->toDateString()]
-        );
+            $stok = StokSeragam::firstOrNew(
+                ['seragam_detail_id' => $seragam->id],
+                ['created_at' => now()->toDateString()]
+            );
 
-        $stok->supplier_id = $request->supplier_id;
-        $stok->stok += $request->stok;
+            $stok->supplier_id = $request->supplier_id;
+            $stok->stok += $request->stok;
 
-        if ($stok->exists) {
-            $stok->update();
+            if ($stok->exists) {
+                $stok->update();
+            } else {
+                $stok->save();
+            }
         } else {
-            $stok->save();
+            return Inertia::render('Error/404');
         }
     }
 

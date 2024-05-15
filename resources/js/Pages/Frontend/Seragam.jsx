@@ -57,11 +57,11 @@ export default function Seragam(props) {
             <div className=' flex max-lg:grid max-lg:grid-cols-2 justify-center flex-col lg:flex-row lg:flex-wrap items-stretch gap-4 max-lg:gap-2 p-3 mb-16'>
                 {props.seragam.length > 0 ? props.seragam.map((data, i) => {
                     return (
-                        <div key={i} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div key={i} className="max-lg:max-w-sm lg:w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <a href="#">
                                 {data.foto ?
-                                    <img className="p-8 max-lg:p-3 rounded-lg" src={"/storage/" + data.foto} alt="product image" />
-                                    : <img className="p-8 rounded-lg" src="/storage/null.png" alt="product image" />
+                                    <img className="p-5 max-lg:p-3 rounded-lg" src={"/storage/" + data.foto} alt="product image" />
+                                    : <img className="p-10 rounded-lg" src="/storage/null.png" alt="product image" />
                                 }
                             </a>
                             <div className="px-5 pb-5 max-lg:px-3 max-lg:pb-3">
@@ -87,17 +87,12 @@ export default function Seragam(props) {
                                     <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-2xl max-lg:text-sm font-bold text-gray-900 dark:text-white"><NumericFormat value={data.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
+                                    <span className="text-l max-lg:text-sm font-bold text-gray-900 dark:text-white"><NumericFormat value={data.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
                                     {data.seragam_detail.length > 0 && data.seragam_detail.some(detail => detail.stok > 0) ?
                                         <div>
-                                            <button onClick={() => handleInfoClick(data.id)} type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center m-1">
-                                                <svg className="w-2 h-2 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25">
-                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                </svg>
-                                            </button>
                                             <Link href={route('detail', data.id)}>
                                                 <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center m-1">
-                                                    <svg className="w-2 h-2 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25">
+                                                    <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
                                                 </button>
