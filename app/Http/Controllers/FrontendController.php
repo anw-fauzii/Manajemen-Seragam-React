@@ -8,6 +8,7 @@ use App\Models\PesananDetail;
 use App\Models\Seragam;
 use App\Models\SeragamDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
@@ -33,7 +34,17 @@ class FrontendController extends Controller
     public function show($id, Request $request)
     {
         $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
-        $seragam = Seragam::with('seragamDetail')->where('kategori', $id)->get();
+        $seragam = Seragam::with(['seragamDetail' => function ($query) {
+            $query->select('seragam_id', DB::raw('SUM(stok) as total_stok'))
+                ->groupBy('seragam_id');
+        }])
+            ->where('kategori', $id)
+            ->select('seragam.*', DB::raw('SUM(seragam_detail.stok) as total_stok'))
+            ->leftJoin('seragam_detail', 'seragam.id', '=', 'seragam_detail.seragam_id')
+            ->groupBy('seragam.id')
+            ->orderByRaw('total_stok DESC, total_stok = 0')
+            ->get();
+
         if ($id = 1) {
             $unit = "PG";
         } elseif ($id = 2) {

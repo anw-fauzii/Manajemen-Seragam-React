@@ -9,6 +9,7 @@ import toastr, { error } from "toastr";
 
 export default function Detail(props) {
     const [selectedSize, setSelectedSize] = useState('');
+    const [selectedSizeStock, setSelectedSizeStock] = useState(0);
     const [selectedSize2, setSelectedSize2] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -114,31 +115,64 @@ export default function Detail(props) {
     };
 
     const handleChange = (e) => {
-        setSelectedSize(Number(e.target.value));
-        setData('ukuran', e.target.value);
+        const newSize = Number(e.target.value);
+        setSelectedSize(newSize);
+        setData('ukuran', newSize);
+
+        // Ambil informasi stok untuk ukuran yang dipilih
+        const selectedSizeStock = props.seragam.seragam_detail.find(item => item.id === newSize)?.stok;
+
+        // Jika stok cukup untuk ukuran baru, atur ulang kuantitas menjadi 0
+        if (selectedSizeStock < quantity) {
+            setQuantity(selectedSizeStock);
+            setData('jumlah', selectedSizeStock);
+        }
     };
+
+    useEffect(() => {
+        if (selectedSize) {
+            const selectedSizeData = props.seragam.seragam_detail.find(detail => detail.id === selectedSize);
+            setSelectedSizeStock(selectedSizeData.stok);
+        }
+    }, [selectedSize, props.seragam.seragam_detail]);
 
     const handleIncrement = () => {
         setQuantity(prevQuantity => {
             const newQuantity = prevQuantity + 1;
-            setData('jumlah', newQuantity);
-            return newQuantity;
+            if (isStockAvailable(selectedSize, newQuantity)) {
+                setData('jumlah', newQuantity);
+                return newQuantity;
+            } else {
+                // Tidak melakukan apa-apa jika stok tidak mencukupi
+                return prevQuantity;
+            }
         });
     };
 
     const handleDecrement = () => {
         setQuantity(prevQuantity => {
             const newQuantity = prevQuantity > 1 ? prevQuantity - 1 : 1;
-            setData('jumlah', newQuantity);
-            return newQuantity;
+            if (isStockAvailable(selectedSize, newQuantity)) {
+                setData('jumlah', newQuantity);
+                return newQuantity;
+            } else {
+                // Tidak melakukan apa-apa jika stok tidak mencukupi
+                return prevQuantity;
+            }
         });
+    };
+    const isStockAvailable = (size, quantity) => {
+        // Ambil informasi stok untuk ukuran yang dipilih
+        const selectedSizeStock = props.seragam.seragam_detail.find(item => item.id === size)?.stok;
+        // Kembalikan apakah stok mencukupi untuk kuantitas yang diminta
+        return selectedSizeStock >= quantity;
     };
 
     const handleChangeJumlah = (e) => {
         const value = Math.max(1, parseInt(e.target.value) || 1);
         setQuantity(value);
-        setData('jumlah', value);
     };
+
 
     return (
         <div className=' min-h-screen bg-white bg-cover '>
@@ -299,7 +333,7 @@ export default function Detail(props) {
                                         ))}
                                     </div>
                                     <div>Kuantitas</div>
-                                    <div className=" col-span-2">
+                                    <div className="col-span-2">
                                         <div className="flex">
                                             <button
                                                 type="button"
@@ -355,6 +389,10 @@ export default function Detail(props) {
                                                 </svg>
                                             </button>
                                         </div>
+                                        {/* Tampilkan pesan jika kuantitas mencapai stok maksimum */}
+                                        {quantity >= selectedSizeStock && (
+                                            <p className="text-red-500">Kuantitas melebihi stok yang tersedia</p>
+                                        )}
                                     </div>
                                 </div>
                                 {showForm && (

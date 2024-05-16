@@ -88,7 +88,7 @@ export default function Seragam(props) {
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <span className="text-l max-lg:text-sm font-bold text-gray-900 dark:text-white"><NumericFormat value={data.harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
-                                    {data.seragam_detail.length > 0 && data.seragam_detail.some(detail => detail.stok > 0) ?
+                                    {data.total_stok > 0 && data.seragam_detail.some(detail => detail.total_stok > 0) ?
                                         <div>
                                             <Link href={route('detail', data.id)}>
                                                 <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center m-1">
