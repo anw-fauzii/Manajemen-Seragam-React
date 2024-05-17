@@ -156,15 +156,12 @@ export default function Detail(props) {
                 setData('jumlah', newQuantity);
                 return newQuantity;
             } else {
-                // Tidak melakukan apa-apa jika stok tidak mencukupi
                 return prevQuantity;
             }
         });
     };
     const isStockAvailable = (size, quantity) => {
-        // Ambil informasi stok untuk ukuran yang dipilih
         const selectedSizeStock = props.seragam.seragam_detail.find(item => item.id === size)?.stok;
-        // Kembalikan apakah stok mencukupi untuk kuantitas yang diminta
         return selectedSizeStock >= quantity;
     };
 
