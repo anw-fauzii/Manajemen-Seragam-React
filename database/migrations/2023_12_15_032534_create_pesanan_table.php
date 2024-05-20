@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('kelas');
             $table->integer('total_harga');
+            $table->string('ip_pelanggan');
+            $table->string('kode_pembayaran')->nullable();
             $table->enum('status', ['1', '0']);
             $table->timestamps();
         });

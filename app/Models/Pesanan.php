@@ -10,7 +10,7 @@ class Pesanan extends Model
     use HasFactory;
     protected $table = 'pesanan';
     protected $fillable = [
-        'kode', 'nama', 'kelas', 'total_harga', 'status'
+        'kode', 'nama', 'kelas', 'total_harga', 'status', 'ip_pelanggan', 'kode_pembayaran'
     ];
 
     public static function boot()

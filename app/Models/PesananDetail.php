@@ -10,7 +10,7 @@ class PesananDetail extends Model
     use HasFactory;
     protected $table = 'pesanan_detail';
     protected $fillable = [
-        'seragam_detail_id', 'pesanan_id', 'jumlah', 'subtotal', 'catatan', 'ip_pelanggan'
+        'seragam_detail_id', 'pesanan_id', 'jumlah', 'subtotal', 'catatan',
     ];
 
     public function seragam_detail()

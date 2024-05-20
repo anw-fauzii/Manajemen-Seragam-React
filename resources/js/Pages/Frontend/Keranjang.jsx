@@ -2,34 +2,11 @@ import Bottom from "@/Layouts/Frontend/Bottom";
 import Chekout from "@/Layouts/Frontend/Chekout";
 import Navbar from "@/Layouts/Frontend/Navbar";
 import { Head, router } from "@inertiajs/react";
-import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import Swal from "sweetalert2";
 import toastr from "toastr";
 
 const Keranjang = (props) => {
-    const [keranjang, setKeranjang] = useState(props.keranjang);
-
-    const updateJumlahProduk = (index, newJumlah) => {
-        const updatedKeranjang = [...keranjang];
-        updatedKeranjang[index].jumlah = newJumlah;
-        setKeranjang(updatedKeranjang);
-    };
-
-    const tambah = (index) => {
-        const updatedKeranjang = [...keranjang];
-        updatedKeranjang[index].jumlah += 1;
-        setKeranjang(updatedKeranjang);
-    };
-
-    const kurang = (index) => {
-        const updatedKeranjang = [...keranjang];
-        if (updatedKeranjang[index].jumlah > 1) {
-            updatedKeranjang[index].jumlah -= 1;
-            setKeranjang(updatedKeranjang);
-        }
-    };
-
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Konfirmasi',
@@ -75,33 +52,6 @@ const Keranjang = (props) => {
                                     </div>
                                     <div className="flex lg:flex-1 lg:w-20">
                                         <p className=" text-gray-900 dark:text-white mt-1">Qty. {data.jumlah}</p>
-                                        {/* <button onClick={() => kurang(i)} disabled={data.jumlah === 1} className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                                            <span className="sr-only">Quantity button</span>
-                                            <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                            </svg>
-                                        </button>
-
-                                        <div>
-                                            <input
-                                                type="number"
-                                                value={data.jumlah}
-                                                min="1"
-                                                onChange={(e) => {
-                                                    const value = parseInt(e.target.value) || 1;
-                                                    updateJumlahProduk(i, value);
-                                                }}
-                                                className="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="1"
-                                                required
-                                            />
-                                        </div>
-                                        <button onClick={() => tambah(i)} className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                                            <span className="sr-only">Quantity button</span>
-                                            <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                            </svg>
-                                            </button>*/}
                                     </div>
                                     <div className="lg:flex-1 lg:w-20">
                                         <p className=" text-gray-900 dark:text-white mt-1 hidden lg:block"><NumericFormat value={data.seragam_detail.seragam.harga * data.jumlahs} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></p>

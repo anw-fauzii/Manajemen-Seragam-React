@@ -77,15 +77,16 @@ class FrontendController extends Controller
             'nama' => $request->nama,
             'kelas' => $request->kelas,
             'total_harga' => $Keranjang->sum('subtotal'),
+            'ip_pelanggan' => $request->getClientIp(),
             'status' => FALSE
         ]);
+
         foreach ($Keranjang as $data) {
             PesananDetail::create([
                 'pesanan_id' => $pesanan->id,
                 'seragam_detail_id' => $data->seragam_detail_id,
                 'jumlah' => $data->jumlah,
                 'catatan' => $data->catatan,
-                'ip_pelanggan' => $data->ip_pelanggan,
                 'subtotal' => $data->subtotal
             ]);
             $seragam = SeragamDetail::find($data->seragam_detail_id);
@@ -109,7 +110,7 @@ class FrontendController extends Controller
                 'last_name' => $pesanan->kelas
             ),
         );
-        $pesananDetail = PesananDetail::where('ip_pelanggan', $request->getClientIp())->where('pesanan_id', $pesanan->id)->get();
+        $pesananDetail = PesananDetail::join('pesanan', 'pesanan.id', '=', 'pesanan_detail.pesanan_id')->where('ip_pelanggan', $request->getClientIp())->where('pesanan_id', $pesanan->id)->get();
         foreach ($pesananDetail as $data) {
             $item = array(
                 'id' => $data->seragam_detail_id,
@@ -121,6 +122,10 @@ class FrontendController extends Controller
             $params['item_details'][] = $item;
         }
         $snapToken = \Midtrans\Snap::getSnapToken($params);
+        $update_kode = Pesanan::findOrFail($pesanan->id);
+        $update_kode->update([
+            'kode_pembayaran' => $snapToken
+        ]);
         return Redirect::back()->with('message', $snapToken);
     }
 
@@ -142,6 +147,7 @@ class FrontendController extends Controller
             'nama' => $request->nama,
             'kelas' => $request->kelas,
             'total_harga' => $seragamDetail->seragam->harga * $request->jumlah,
+            'ip_pelanggan' => $request->getClientIp(),
             'status' => FALSE
         ]);
         PesananDetail::create([
@@ -149,7 +155,6 @@ class FrontendController extends Controller
             'seragam_detail_id' => $request->ukuran,
             'jumlah' => $request->jumlah,
             'catatan' => $request->catatan,
-            'ip_pelanggan' => $request->getClientIp(),
             'subtotal' => $seragamDetail->seragam->harga * $request->jumlah,
         ]);
         $seragam = SeragamDetail::find($request->ukuran);
@@ -171,7 +176,7 @@ class FrontendController extends Controller
                 'last_name' => $pesanan->kelas
             ),
         );
-        $pesananDetail = PesananDetail::where('ip_pelanggan', $request->getClientIp())->where('pesanan_id', $pesanan->id)->get();
+        $pesananDetail = PesananDetail::join('pesanan', 'pesanan.id', '=', 'pesanan_detail.pesanan_id')->where('ip_pelanggan', $request->getClientIp())->where('pesanan_id', $pesanan->id)->get();
         foreach ($pesananDetail as $data) {
             $item = array(
                 'id' => $data->seragam_detail_id,
@@ -183,6 +188,20 @@ class FrontendController extends Controller
             $params['item_details'][] = $item;
         }
         $snapToken = \Midtrans\Snap::getSnapToken($params);
+        $update_kode = Pesanan::findOrFail($pesanan->id);
+        $update_kode->update([
+            'kode_pembayaran' => $snapToken
+        ]);
         return to_route('welcome')->with('message', $snapToken);
+    }
+
+    public function pesanan_costumer(Request $request)
+    {
+        $pesanan = Pesanan::where('ip_pelanggan', $request->getClientIp())->get();
+        $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
+        return Inertia::render('Frontend/Pesanan', [
+            'keranjang' => $keranjang,
+            'pesanan' => $pesanan
+        ]);
     }
 }

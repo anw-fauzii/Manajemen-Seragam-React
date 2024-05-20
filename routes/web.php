@@ -47,3 +47,4 @@ Route::get('/checkout', [App\Http\Controllers\FrontendController::class, 'checko
 Route::get('/data-seragam/{id}', [App\Http\Controllers\FrontendController::class, 'show'])->name('data-seragam');
 Route::post('/pesan-seragam', [App\Http\Controllers\FrontendController::class, 'store'])->name('pesan-seragam');
 Route::post('/payment-sekarang', [App\Http\Controllers\FrontendController::class, 'payment_sekarang'])->name('payment-sekarang');
+Route::get('/pesanan-costumer/', [App\Http\Controllers\FrontendController::class, 'pesanan_costumer'])->name('pesanan-costumer');
