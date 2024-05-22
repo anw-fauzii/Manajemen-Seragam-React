@@ -49,7 +49,7 @@ class DashboardController extends Controller
                 'pesanan_detail',
                 'pesanan_detail.seragam_detail',
                 'pesanan_detail.seragam_detail.seragam',
-            )->latest()->take(10)->get();
+            )->latest()->take(5)->get();
             $supplier = Supplier::all()->count();
             $stok_seragam = SeragamDetail::sum('stok');
             $user = User::all()->count();

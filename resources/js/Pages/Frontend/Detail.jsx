@@ -69,7 +69,7 @@ export default function Detail(props) {
                     toastr.error('Data gagal disimpan', 'Error')
                 }
 
-                setIsSubmitting(false); // Reset isSubmitting setelah error
+                setIsSubmitting(false);
             }
         }, data);
     };
@@ -143,7 +143,6 @@ export default function Detail(props) {
                 setData('jumlah', newQuantity);
                 return newQuantity;
             } else {
-                // Tidak melakukan apa-apa jika stok tidak mencukupi
                 return prevQuantity;
             }
         });

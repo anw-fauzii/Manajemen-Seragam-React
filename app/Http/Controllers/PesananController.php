@@ -27,7 +27,7 @@ class PesananController extends Controller
                 'pesanan_detail',
                 'pesanan_detail.seragam_detail',
                 'pesanan_detail.seragam_detail.seragam',
-            )->get();
+            )->orderBy('id', 'DESC')->get();
             return Inertia::render('Pesanan/Index', [
                 'title' => "Daftar Pesanan",
                 'pesanan' => $pesanan

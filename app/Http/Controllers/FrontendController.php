@@ -197,7 +197,11 @@ class FrontendController extends Controller
 
     public function pesanan_costumer(Request $request)
     {
-        $pesanan = Pesanan::where('ip_pelanggan', $request->getClientIp())->get();
+        $pesanan = Pesanan::with(
+            'pesanan_detail',
+            'pesanan_detail.seragam_detail',
+            'pesanan_detail.seragam_detail.seragam',
+        )->where('ip_pelanggan', $request->getClientIp())->get();
         $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
         return Inertia::render('Frontend/Pesanan', [
             'keranjang' => $keranjang,
