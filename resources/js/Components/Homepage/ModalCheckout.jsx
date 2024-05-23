@@ -57,8 +57,14 @@ const ModalFrontend = ({ closeModal }) => {
                     kelas: ''
                 })
             },
-            onError: () => {
-                toastr.error('Silahkan Periksa Kembali Inputan Anda', 'Error!')
+            onError: (error) => {
+                if (error) {
+                    Object.values(error).forEach(error => {
+                        toastr.warning(error, 'Error');
+                    });
+                } else {
+                    toastr.error('Data gagal disimpan', 'Error')
+                }
                 setIsButtonClicked(false);
             }
         }, data)
@@ -105,12 +111,10 @@ const ModalFrontend = ({ closeModal }) => {
                                 <div className="flex overflow-x-auto p-3">
                                     <label for="nama" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mr-8 mt-2">Nama</label>
                                     <input type="text" min="1" onChange={(e) => setData('nama', e.target.value)} id="nama" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={data.nama} />
-                                    {errors.nama && <p className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.nama}</p>}
                                 </div>
                                 <div className="flex overflow-x-auto p-3">
                                     <label for="kelas" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mr-9 mt-2">Kelas</label>
                                     <input type="text" min="1" onChange={(e) => setData('kelas', e.target.value)} id="kelas" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={data.kelas} />
-                                    {errors.kelas && <p className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.kelas}</p>}
                                 </div>
                                 <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                     <button

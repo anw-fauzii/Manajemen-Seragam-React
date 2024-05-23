@@ -11,7 +11,6 @@ import Dropdown from '@/Layouts/Frontend/Dropdown';
 import { NumericFormat } from 'react-number-format';
 
 export default function Index(props) {
-    console.log(props.seragam.data)
     const [filterText, setFilterText] = useState('');
     const [perPage, setPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);

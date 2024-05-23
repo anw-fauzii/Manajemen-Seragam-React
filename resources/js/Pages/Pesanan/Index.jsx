@@ -9,7 +9,6 @@ import ModalDetailPesanan from '@/Components/Homepage/ModalDetailPesanan';
 import moment from 'moment';
 
 export default function Index(props) {
-    console.log(props)
     const [filterText, setFilterText] = useState('');
     const [perPage, setPerPage] = useState();
     const [currentPage, setCurrentPage] = useState(1);

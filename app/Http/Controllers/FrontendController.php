@@ -72,6 +72,13 @@ class FrontendController extends Controller
 
     public function store(Request $request)
     {
+        $validator = $request->validate([
+            'nama' => 'required',
+            'kelas' => 'required',
+        ], [
+            'nama.required' => "Nama harus diisi",
+            'kelas.required' => "Kelas harus diisi",
+        ]);
         $Keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
         $pesanan = Pesanan::create([
             'nama' => $request->nama,

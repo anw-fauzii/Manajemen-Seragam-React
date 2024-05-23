@@ -4,7 +4,6 @@ import SubJudulHeader from '@/Components/SubJudulHeader';
 import toastr from 'toastr';
 
 export default function Edit(props) {
-    console.log(props.supplier)
     const { data, setData, post, errors, processing } = useForm({
         nama_supplier: props.supplier.nama_supplier || '',
         penanggung_jawab: props.supplier.penanggung_jawab || '',

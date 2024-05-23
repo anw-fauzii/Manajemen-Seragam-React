@@ -135,17 +135,25 @@ const Pesanan = (props) => {
                                 </Table.Head>
                                 <Table.Body className="divide-y">
                                     {modalData.pesanan_detail.map((data, i) => {
-                                        console.log(data)
+
                                         return (
                                             <>
-                                                <Table.Cell key={i} className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{data.seragam_detail.seragam.nama_seragam} ({data.seragam_detail.ukuran})</Table.Cell>
-                                                <Table.Cell>{data.jumlah}</Table.Cell>
-                                                <Table.Cell>
-                                                    <NumericFormat value={data.subtotal} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} />
-                                                </Table.Cell>
+                                                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                                    <Table.Cell key={i} className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{data.seragam_detail.seragam.nama_seragam} ({data.seragam_detail.ukuran})</Table.Cell>
+                                                    <Table.Cell>{data.jumlah}</Table.Cell>
+                                                    <Table.Cell>
+                                                        <NumericFormat value={data.subtotal} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} />
+                                                    </Table.Cell>
+                                                </Table.Row>
                                             </>
                                         )
                                     })}
+                                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                        <Table.Cell colSpan={2} className=" text-center whitespace-nowrap font-medium text-gray-900 dark:text-white">Total</Table.Cell>
+                                        <Table.Cell>
+                                            <NumericFormat value={modalData.total_harga} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} />
+                                        </Table.Cell>
+                                    </Table.Row>
                                 </Table.Body>
                             </Table>
                         </div>
