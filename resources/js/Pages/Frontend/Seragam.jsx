@@ -3,58 +3,41 @@ import Bottom from '@/Layouts/Frontend/Bottom';
 import Navbar from '@/Layouts/Frontend/Navbar';
 import React, { useEffect } from 'react';
 import { NumericFormat } from 'react-number-format';
-import ModalFrontend from '@/Components/Homepage/ModalFrontend';
 import { useState } from 'react';
 
 export default function Seragam(props) {
-    const [modalData, setModalData] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleInfoClick = (id) => {
-        const selectedData = props.seragam.find(item => item.id === id);
+    const query = props.query || '';
+    const [searchQuery, setSearchQuery] = useState(query);
 
-        if (selectedData) {
-            setModalData(selectedData);
-            setIsModalOpen(true);
-        }
+    const handleSearch = (e) => {
+        e.preventDefault();
+        router.get('/data-seragam/cari', { q: searchQuery });
     };
+
     return (
         <div className='min-h-screen bg-gray-100'>
             <Head title="Seragam" />
             <div className="">
                 <Navbar />
             </div>
-            <div className=' flex lg:justify-center flex-col gap-4 mt-16 p-4'>
-                <nav className="flex" aria-label="Breadcrumb">
-                    <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                        <li className="inline-flex items-center">
-                            <a href="#" className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
-                                <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                                </svg>
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <div className="flex items-center">
-                                <svg className="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
-                                </svg>
-                                <a href="#" className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Projects</a>
-                            </div>
-                        </li>
-                        <li aria-current="page">
-                            <div className="flex items-center">
-                                <svg className="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
-                                </svg>
-                                <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">Flowbite</span>
-                            </div>
-                        </li>
-                    </ol>
-                </nav>
-                <h2 className="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Daftar Seragam</h2>
+            <div className="mt-20 px-4">
+                <form onSubmit={handleSearch} class="max-w-md mx-auto mb-4">
+                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Cari</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari seragam ..." required />
+                        <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cari</button>
+                    </div>
+                </form>
             </div>
-            <div className=' flex max-lg:grid max-lg:grid-cols-2 justify-center flex-col lg:flex-row lg:flex-wrap items-stretch gap-4 max-lg:gap-2 p-3 mb-16'>
+            <div className="flex flex-col items-center gap-4 px-4">
+                <h3 className="text-xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">{props.title}</h3>
+            </div>
+            <div className=' flex max-lg:grid max-lg:grid-cols-2 justify-center flex-col lg:flex-row lg:flex-wrap items-stretch gap-4 max-lg:gap-2 p-4 mb-16'>
                 {props.seragam.length > 0 ? props.seragam.map((data, i) => {
                     return (
                         <div key={i} className="max-lg:max-w-sm lg:w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -103,15 +86,9 @@ export default function Seragam(props) {
                             </div>
                         </div>
                     )
-                }) : <p>Belum ada adata</p>}
+                }) : <p className=' text-center col-span-2'>Belum ada data</p>}
             </div>
             <Bottom keranjang={props.keranjang} />
-            {isModalOpen && (
-                <ModalFrontend
-                    modalData={modalData}
-                    closeModal={() => setIsModalOpen(false)}
-                />
-            )}
-        </div>
+        </div >
     );
 }

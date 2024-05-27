@@ -18,8 +18,18 @@ class FrontendController extends Controller
     public function welcome(Request $request)
     {
         $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
+        $seragam = Seragam::with(['seragamDetail' => function ($query) {
+            $query->select('seragam_id', DB::raw('SUM(stok) as total_stok'))
+                ->groupBy('seragam_id');
+        }])
+            ->select('seragam.*', DB::raw('SUM(seragam_detail.stok) as total_stok'))
+            ->leftJoin('seragam_detail', 'seragam.id', '=', 'seragam_detail.seragam_id')
+            ->groupBy('seragam.id')
+            ->orderByRaw('total_stok DESC, total_stok = 0')
+            ->get();
         return Inertia::render('Frontend/Welcome', [
-            'keranjang' => $keranjang
+            'keranjang' => $keranjang,
+            'seragam' => $seragam,
         ]);
     }
 
@@ -33,27 +43,42 @@ class FrontendController extends Controller
 
     public function show($id, Request $request)
     {
+        $cari = $request->input('q');
         $keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
-        $seragam = Seragam::with(['seragamDetail' => function ($query) {
-            $query->select('seragam_id', DB::raw('SUM(stok) as total_stok'))
-                ->groupBy('seragam_id');
-        }])
-            ->where('kategori', $id)
-            ->select('seragam.*', DB::raw('SUM(seragam_detail.stok) as total_stok'))
-            ->leftJoin('seragam_detail', 'seragam.id', '=', 'seragam_detail.seragam_id')
-            ->groupBy('seragam.id')
-            ->orderByRaw('total_stok DESC, total_stok = 0')
-            ->get();
-
-        if ($id = 1) {
-            $unit = "PG";
-        } elseif ($id = 2) {
-            $unit = "TK";
-        } elseif ($id = 3) {
-            $unit = "SD";
+        if ($cari) {
+            $seragam = Seragam::with(['seragamDetail' => function ($query) {
+                $query->select('seragam_id', DB::raw('SUM(stok) as total_stok'))
+                    ->groupBy('seragam_id');
+            }])
+                ->where('nama_seragam', 'like', "%$cari%")
+                ->select('seragam.*', DB::raw('SUM(seragam_detail.stok) as total_stok'))
+                ->leftJoin('seragam_detail', 'seragam.id', '=', 'seragam_detail.seragam_id')
+                ->groupBy('seragam.id')
+                ->orderByRaw('total_stok DESC, total_stok = 0')
+                ->get();
+            $title = "Hasil Pencarian : " . $cari;
+        } else {
+            $seragam = Seragam::with(['seragamDetail' => function ($query) {
+                $query->select('seragam_id', DB::raw('SUM(stok) as total_stok'))
+                    ->groupBy('seragam_id');
+            }])
+                ->where('kategori', $id)
+                ->select('seragam.*', DB::raw('SUM(seragam_detail.stok) as total_stok'))
+                ->leftJoin('seragam_detail', 'seragam.id', '=', 'seragam_detail.seragam_id')
+                ->groupBy('seragam.id')
+                ->orderByRaw('total_stok DESC, total_stok = 0')
+                ->get();
+            if ($id == 1) {
+                $title = "Daftar Seragam PG";
+            } elseif ($id == 2) {
+                $title = "Daftar Seragam TK";
+            } elseif ($id == 3) {
+                $title = "Daftar Seragam SD";
+            }
         }
+
         return Inertia::render('Frontend/Seragam', [
-            'title' => "Daftar Seragam " . $unit,
+            'title' =>  $title,
             'seragam' => $seragam,
             'keranjang' => $keranjang
         ]);
