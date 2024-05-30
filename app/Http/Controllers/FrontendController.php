@@ -110,7 +110,7 @@ class FrontendController extends Controller
             'kelas' => $request->kelas,
             'total_harga' => $Keranjang->sum('subtotal'),
             'ip_pelanggan' => $request->getClientIp(),
-            'status' => FALSE
+            'status' => "Pending"
         ]);
 
         foreach ($Keranjang as $data) {
@@ -134,7 +134,7 @@ class FrontendController extends Controller
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => rand(),
+                'order_id' => $pesanan->id,
             ),
             'item_details' => array(),
             'customer_details' => array(
@@ -180,7 +180,7 @@ class FrontendController extends Controller
             'kelas' => $request->kelas,
             'total_harga' => $seragamDetail->seragam->harga * $request->jumlah,
             'ip_pelanggan' => $request->getClientIp(),
-            'status' => FALSE
+            'status' => "Pending"
         ]);
         PesananDetail::create([
             'pesanan_id' => $pesanan->id,
@@ -200,7 +200,7 @@ class FrontendController extends Controller
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => rand(),
+                'order_id' => $pesanan->id,
             ),
             'item_details' => array(),
             'customer_details' => array(
@@ -239,5 +239,17 @@ class FrontendController extends Controller
             'keranjang' => $keranjang,
             'pesanan' => $pesanan
         ]);
+    }
+
+    public function callback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash("SHA512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+        if ($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'settlement') {
+                $pesanan = Pesanan::find($request->order_id);
+                $pesanan->update(['status' => 'Dibayar']);
+            }
+        }
     }
 }

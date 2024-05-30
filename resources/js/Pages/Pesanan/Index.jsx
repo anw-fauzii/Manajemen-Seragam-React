@@ -54,10 +54,10 @@ export default function Index(props) {
         },
         {
             name: 'Status', selector: row => {
-                if (row.status == 0) {
+                if (row.status == "Pending") {
                     return <span class=" bg-yellow-300 text-slate-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300" > Pending</span>
                 } else {
-                    return <span class=" bg-blue-600 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300" > Selesai</span>
+                    return <span class=" bg-blue-600 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300" > Dibayar</span>
                 }
             }, sortable: true, width: '12%'
         },

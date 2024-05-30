@@ -92,7 +92,9 @@ const Pesanan = (props) => {
                                 </svg>
                                 <div className="lg:flex flex-grow items-center">
                                     <div className="flex lg:flex-1 lg:w-20">
-                                        <p className="font-semibold text-gray-900 dark:text-white">{data.kode}  <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending</span></p>
+                                        <p className="font-semibold text-gray-900 dark:text-white">{data.kode}
+                                            <span className={`${data.status === "Pending" ? 'bg-yellow-100 text-yellow-800' : ' bg-blue-300 text-blue-900'}  text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300`}>{data.status}</span>
+                                        </p>
                                     </div>
                                     <div className="flex lg:flex-auto lg:w-20">
                                         <p className=" text-sm text-gray-700 dark:text-white mt-1">{data.nama} ({data.kelas})</p>

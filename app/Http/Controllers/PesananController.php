@@ -126,7 +126,7 @@ class PesananController extends Controller
         $user = User::find(Auth::user()->id);
         if ($user->hasRole('admin')) {
             $pesanan = Pesanan::findOrFail($id);
-            $pesanan->status = "1";
+            $pesanan->status = "Paid";
             $pesanan->update();
             return to_route('pesanan.index');
         } else {
