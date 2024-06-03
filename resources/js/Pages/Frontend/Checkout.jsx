@@ -1,10 +1,6 @@
 import Bottom from "@/Layouts/Frontend/Bottom";
-import Chekout from "@/Layouts/Frontend/Chekout";
 import Navbar from "@/Layouts/Frontend/Navbar";
 import { Head, router, useForm } from "@inertiajs/react";
-import { useState } from "react";
-import { NumericFormat } from "react-number-format";
-import Swal from "sweetalert2";
 import toastr from "toastr";
 
 const Checkout = (props) => {
