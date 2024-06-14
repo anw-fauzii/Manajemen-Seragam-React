@@ -309,22 +309,22 @@ export default function Detail(props) {
                                     </div>
                                     <div>Jenis</div>
                                     <div className="grid grid-cols-2 gap-2 col-span-2">
-                                        {['Panjang', 'Pendek'].map((panjangPendek, i) => (
+                                        {['Laki-Laki', 'Perempuan'].map((lakiPerempuan, i) => (
                                             <label
                                                 key={i}
-                                                className={`flex items-center justify-center px-3 py-1 text-sm font-medium transition duration-300 ease-in-out cursor-pointer border rounded-lg ${selectedSize2 === panjangPendek
+                                                className={`flex items-center justify-center px-3 py-1 text-sm font-medium transition duration-300 ease-in-out cursor-pointer border rounded-lg ${selectedSize2 === lakiPerempuan
                                                     ? 'text-white bg-blue-600 border-blue-600 outline outline-2 outline-gray-500'
                                                     : 'text-gray-900 bg-transparent border-blue-800 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700'
                                                     }`}
                                             >
                                                 <input
                                                     type="radio"
-                                                    name="panjangPendek"
-                                                    value={panjangPendek}
+                                                    name="lakiPerempuan"
+                                                    value={lakiPerempuan}
                                                     className="hidden"
-                                                    onChange={() => setSelectedSize2(panjangPendek)}
+                                                    onChange={() => setSelectedSize2(lakiPerempuan)}
                                                 />
-                                                {panjangPendek}
+                                                {lakiPerempuan}
                                             </label>
                                         ))}
                                     </div>
