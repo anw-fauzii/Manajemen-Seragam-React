@@ -252,4 +252,12 @@ class FrontendController extends Controller
             }
         }
     }
+
+    public function tentang(Request $request)
+    {
+        $Keranjang = Keranjang::where('ip_pelanggan', $request->getClientIp())->get();
+        return Inertia::render('Frontend/Tentang', [
+            'keranjang' => $Keranjang
+        ]);
+    }
 }
